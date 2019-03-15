@@ -24,8 +24,8 @@
                         <li><a href="{{ route('vehicles.create') }}">Add vehicle</a></li>
                         <li><a href="{{ route('vehicles.index') }}">Vehicles list</a></li>
                         <li><a href="#">-------</a></li>
-                        <li><a href="components-grid.html">Fuel Types</a></li>
-                        <li><a href="components-range-sliders.html">Vehicle Types</a></li>
+                        <li><a href="#">Fuel Types</a></li>
+                        <li><a href="#">Vehicle Types</a></li>
                     </ul>
                 </li>
             

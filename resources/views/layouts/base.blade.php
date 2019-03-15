@@ -10,7 +10,7 @@
         <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
 
         <!-- App title -->
-        <title>Uplon - Responsive Admin Dashboard Template</title>
+        <title>@yield('title','Dashboard') | Sistema de asignación óptima </title>
 
         <!--Morris Chart CSS -->
 		<link rel="stylesheet" href="{{ asset('assets/plugins/morris/morris.css') }}">

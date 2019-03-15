@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Vehicle;
+use App\Vehicle_type;
+use App\Fuel_type;
 
 class Vehicles extends Controller
 {
@@ -27,7 +29,11 @@ class Vehicles extends Controller
      */
     public function create()
     {
-        //
+        $fuels = Fuel_type::all()->pluck('fuel', 'id');
+        
+        $types = Vehicle_type::all()->pluck('type', 'id');
+        
+        return view('vehicles.create', [ 'fuel_types'=>$fuels,  'vehicle_types' => $types  ]);
     }
 
     /**
@@ -38,7 +44,16 @@ class Vehicles extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $vehicle = new Vehicle($request->all());
+
+        if($request->has('refrigeration')){
+            $vehicle->refrigeration = true;
+        }else{
+            $vehicle->refrigeration = false;
+        }
+        $vehicle->save();
+
+        return redirect()->route('vehicles.index');
     }
 
     /**
@@ -60,7 +75,12 @@ class Vehicles extends Controller
      */
     public function edit($id)
     {
-        //
+        $vehicle = Vehicle::find($id);
+        $fuels = Fuel_type::all()->pluck('fuel', 'id');
+        
+        $types = Vehicle_type::all()->pluck('type', 'id');
+        
+        return view('vehicles.edit', [ 'fuel_types'=>$fuels,  'vehicle_types' => $types, 'v' => $vehicle  ]);
     }
 
     /**
@@ -72,7 +92,17 @@ class Vehicles extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $vehicle = Vehicle::find($id);
+        $vehicle->fill($request->all());
+        
+        if($request->has('refrigeration')){
+            $vehicle->refrigeration = true;
+        }else{
+            $vehicle->refrigeration = false;
+        }
+        $vehicle->save();
+
+        return redirect()->route('vehicles.index');
     }
 
     /**

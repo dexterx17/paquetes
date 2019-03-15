@@ -35,7 +35,9 @@
         <div class="row">
             <div class="col-12">
                 <div class="card-box table-responsive">
-                    <h4 class="m-t-0 header-title"><b>Vehicles List</b></h4>
+                    <h4 class="m-t-0 header-title"><b>Vehicles List</b>  
+                        <a class="btn btn-sm waves-effect btn-secondary" href="{{ route('vehicles.create') }}"> <i class="fa fa-plus"></i> </a>
+                    </h4>
                     <p class="text-muted font-13 m-b-30">
                         Registered company vehicles
                     </p>
@@ -56,19 +58,21 @@
 
 
                         <tbody>
+                        @foreach($vehicles as $v)
                         <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
-                            <td></td>
+                            <td>{{ $v->model }}</td>
+                            <td>{{ $v->plaque }}</td>
+                            <td>{{ $v->refrigeration }}</td>
+                            <td>{{ $v->volume_capacity }}</td>
+                            <td>{{ $v->load_capacity }}</td>
+                            <td>{{ $v->type->type }}</td>
+                            <td>{{ $v->fuel->fuel }}</td>
                             <td>
-                                <button class="btn btn-sm waves-effect btn-secondary"> <i class="fa fa-edit"></i> </button>
+                                <a class="btn btn-sm waves-effect btn-secondary" href="{{ route('vehicles.edit',$v->id) }}"> <i class="fa fa-edit"></i> </a>
                                 <button class="btn btn-sm waves-effect waves-light btn-danger"> <i class="fa fa-remove"></i> </button>
                             </td>
                         </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
