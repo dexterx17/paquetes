@@ -15,7 +15,9 @@ class Vehicles extends Controller
      */
     public function index()
     {
-        //
+        $vehicles = Vehicle::all();
+        
+        return view('vehicles.list', [ 'vehicles' => $vehicles ]);
     }
 
     /**

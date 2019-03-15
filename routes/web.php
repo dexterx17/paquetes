@@ -11,10 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.base');
-});
-
+Route::get('/', 'Front@index')->name('dashboard');
+Route::resource('vehicles','Vehicles');
+Route::resource('packages','Packages');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
