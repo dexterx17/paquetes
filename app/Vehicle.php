@@ -10,7 +10,7 @@ class Vehicle extends Model
 
     protected $fillable = [
     	'model', 'refrigeration', 'volume_capacity', 'load_capacity',
-    	'vehicle_type_id', 'fuel_type_id', 'plaque'
+    	'vehicle_type_id', 'fuel_type_id', 'plaque', 'fragile'
     ];
 
     public function type(){
@@ -19,5 +19,10 @@ class Vehicle extends Model
 
     public function fuel(){
         return $this->belongsTo('App\Fuel_type','fuel_type_id');
+    }
+
+
+    public function packages(){
+        return $this->hasMany('App\Package');
     }
 }

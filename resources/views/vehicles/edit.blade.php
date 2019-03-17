@@ -77,6 +77,13 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <div class="checkbox">
+                                            <input id="fragile" type="checkbox" name="fragile" @if($v->fragile) checked @endif >
+                                            <label for="fragile"> Has fragile </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="fuel_type_id">Fuel<span class="text-danger">*</span></label>
                                         {{ Form::select('fuel_type_id', $fuel_types, $v->fuel_type_id, ['class'=> 'form-control', 'id'=> 'fuel_type_id', 'required' => 'required'] ) }}
                                     </div>

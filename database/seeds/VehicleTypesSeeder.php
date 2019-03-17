@@ -13,19 +13,31 @@ class VehicleTypesSeeder extends Seeder
      */
     public function run()
     {
-        $truck = new Vehicle_type();
-        $truck->type = "Truck";
-        $truck->save();
 
         
+        $bike = new Vehicle_type();
+        $bike->type = "Bike";
+        $bike->save();
+
         $motorbike = new Vehicle_type();
         $motorbike->type = "MotorBike";
+        $motorbike->kilometers_per_gallon = 24;
         $motorbike->save();
 
-        $movil = new Vehicle_type();
-        $movil->type = "Movil";
-        $movil->save();
+        $car = new Vehicle_type();
+        $car->type = "Car";
+        $car->kilometers_per_gallon = 18;
+        $car->save();
 
+        $van = new Vehicle_type();
+        $van->type = "Van";
+        $van->kilometers_per_gallon = 8;
+        $van->save();
+
+        $truck = new Vehicle_type();
+        $truck->kilometers_per_gallon = 4;
+        $truck->type = "Truck";
+        $truck->save();
 
     }
 }

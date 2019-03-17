@@ -48,6 +48,7 @@
                             <th>Model</th>
                             <th>Plaque</th>
                             <th>Refrigeration</th>
+                            <th>Fragile cabine</th>
                             <th>Volume Capacity</th>
                             <th>Load Capacity</th>
                             <th>Type</th>
@@ -63,6 +64,7 @@
                             <td>{{ $v->model }}</td>
                             <td>{{ $v->plaque }}</td>
                             <td>{{ $v->refrigeration }}</td>
+                            <td>{{ $v->fragile }}</td>
                             <td>{{ $v->volume_capacity }}</td>
                             <td>{{ $v->load_capacity }}</td>
                             <td>{{ $v->type->type }}</td>

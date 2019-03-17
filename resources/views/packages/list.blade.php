@@ -18,11 +18,11 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="page-title-box">
-                    <h4 class="page-title float-left">packages</h4>
+                    <h4 class="page-title float-left">Packages</h4>
 
                     <ol class="breadcrumb float-right">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Uplon</a></li>
-                        <li class="breadcrumb-item active">packages</li>
+                        <li class="breadcrumb-item active">Packages</li>
                     </ol>
 
                     <div class="clearfix"></div>
@@ -35,23 +35,23 @@
         <div class="row">
             <div class="col-12">
                 <div class="card-box table-responsive">
-                    <h4 class="m-t-0 header-title"><b>packages List</b>  
+                    <h4 class="m-t-0 header-title"><b>Packages List</b>  
                         <a class="btn btn-sm waves-effect btn-secondary" href="{{ route('packages.create') }}"> <i class="fa fa-plus"></i> </a>
                     </h4>
                     <p class="text-muted font-13 m-b-30">
-                        Registered company packages
+                        Registered4ackages
                     </p>
 
                     <table id="datatable" class="table table-striped table-bordered">
                         <thead>
                         <tr>
-                            <th>Model</th>
-                            <th>Plaque</th>
+                            <th>Description</th>
+                            <th>Dimensions</th>
+                            <th>Volumentric Weight</th>
+                            <th>Weight</th>
                             <th>Refrigeration</th>
-                            <th>Volume Capacity</th>
-                            <th>Load Capacity</th>
-                            <th>Type</th>
-                            <th>Fuel</th>
+                            <th>Fragile</th>
+                            <th>Route</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -60,13 +60,19 @@
                         <tbody>
                         @foreach($packages as $p)
                         <tr>
-                            <td>{{ $p->model }}</td>
-                            <td>{{ $p->plaque }}</td>
+                            <td>{{ $p->description }}</td>
+                            <td>
+                                <ul>
+                                    <li>Lenght: {{ $p->length }}</li>
+                                    <li>Width: {{ $p->width }}</li>
+                                    <li>Height: {{ $p->height }}</li>
+                                </ul>
+                            </td>
+                            <td>{{ (( $p->length * $p->widht * $p->height ) / 5000 ) }}</td>
+                            <td>{{ $p->weight }}</td>
                             <td>{{ $p->refrigeration }}</td>
-                            <td>{{ $p->volume_capacity }}</td>
-                            <td>{{ $p->load_capacity }}</td>
-                            <td>{{ $p->type->type }}</td>
-                            <td>{{ $p->fuel->fuel }}</td>
+                            <td>{{ $p->fragile }}</td>
+                            <td>{{ $p->origen }} - {{ $p->destino }} </td>
                             <td>
                                 <a class="btn btn-sm waves-effect btn-secondary" href="{{ route('packages.edit',$p->id) }}"> <i class="fa fa-edit"></i> </a>
                                 <button class="btn btn-sm waves-effect waves-light btn-danger"> <i class="fa fa-remove"></i> </button>

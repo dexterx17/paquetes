@@ -65,3 +65,9 @@
 
 </div>
 @endsection
+
+@section('js')
+        <!-- Page specific js -->
+<script src="{{ asset('assets/pages/jquery.dashboard.js') }}"></script>
+
+@endsection

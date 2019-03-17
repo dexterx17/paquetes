@@ -17,6 +17,7 @@ class CreateVehicleTypesTable extends Migration
             $table->increments('id');
             $table->string('type');
             $table->text('description')->nullable();
+            $table->double('kilometers_per_gallon')->nullable();
             $table->timestamps();
         });
     }
