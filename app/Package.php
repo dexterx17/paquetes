@@ -16,4 +16,8 @@ class Package extends Model
     public function vehicle(){
     	return $this->belongsTo('App\Vehicle');
     }
+
+    public function getVolumetricWeightAttribute(){
+    	return ($this->length*$this->width*$this->height)/5000;
+    }
 }

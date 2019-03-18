@@ -41,7 +41,7 @@
 
                 <!-- LOGO -->
                 <div class="topbar-left">
-                    <a href="index.html" class="logo">
+                    <a href="{{ route('dashboard') }}" class="logo">
                         <i class="zmdi zmdi-group-work icon-c-logo"></i>
                         <span>Uplon</span></a>
                 </div>

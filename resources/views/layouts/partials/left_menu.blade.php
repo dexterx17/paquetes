@@ -13,7 +13,7 @@
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-format-underlined"></i> <span> Packages </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
-                        <li><a href="ui-buttons.html">Add package</a></li>
+                        <li><a href="{{ route('packages.create') }}">Add package</a></li>
                         <li><a href="{{ route('packages.index') }}">Packages list</a></li>
                     </ul>
                 </li>

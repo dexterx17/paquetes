@@ -29,7 +29,11 @@ class Packages extends Controller
     public function create()
     {   
         $vehicles = Vehicle::all();
-        return view('packages.create', [ 'vehicles' => $vehicles ]);
+        $vs = [];
+        foreach ($vehicles as $key => $v) {
+            $vs[$key] = $v->model.' - '.$v->type->type;
+        }
+        return view('packages.create', [ 'vehicles' => $vehicles, 'vs' => $vs ]);
     }
 
     /**
@@ -49,9 +53,9 @@ class Packages extends Controller
         }
 
         if($request->has('fragile')){
-            $package->fragil = true;
+            $package->fragile = true;
         }else{
-            $package->fragil = false;
+            $package->fragile = false;
         }
 
         $package->save();

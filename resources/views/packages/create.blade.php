@@ -68,15 +68,15 @@
                             <div class="p-20">
                                 <form action="{{ route('packages.store') }}" data-parsley-validate novalidate  method="POST" >
                                 {{ csrf_field() }}
-                                <input type="hidden" name="vehicle_id" value="1" id="vehicle_id">
+                                
                                     <div class="form-group">
-                                        <label for="description">Description<span class="text-danger"></span></label>
-                                        <input type="text" name="description" parsley-trigger="change"
+                                        <label for="description">Description<span class="text-danger">*</span></label>
+                                        <input type="text" name="description" parsley-trigger="change" required 
                                                 placeholder="Enter description" class="form-control" id="description">
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label for="length">Volume capacity <small>(0.0)</small> </label>
+                                        <label for="length">Volume capacity <small id="volume_capacity" class="label label-info">(0.0)</small> </label>
                                         
                                         <div class="row">
                                             <small for="length" class="col-lg-1 col-md-1">Length: <span class="text-danger">*</span> </small>
@@ -127,6 +127,11 @@
                                                 placeholder="Enter destino" class="form-control" id="destino">
                                     </div>
 
+                                    <div class="form-group">
+                                        <label for="vehicle_type_id">Vechicle asigned<span class="text-danger">*</span></label>
+                                        {{ Form::select('vehicle_id', $vs, '', ['class'=> 'form-control', 'id'=> 'vehicle_id', 'required' => 'required'] ) }}
+                                    </div>
+
                                     <div class="form-group text-right m-b-0">
                                         <button class="btn btn-primary waves-effect waves-light" type="submit">
                                             Submit
@@ -157,38 +162,11 @@
 
                     <div class="row">
                         <div class="col-sm-6 col-xs-6 col-md-6">
-                            <div id="floating-panel">
-                                <b>Start: </b>
-                                <select id="start">
-                                  <option value="chicago, il">Chicago</option>
-                                  <option value="st louis, mo">St Louis</option>
-                                  <option value="joplin, mo">Joplin, MO</option>
-                                  <option value="oklahoma city, ok">Oklahoma City</option>
-                                  <option value="amarillo, tx">Amarillo</option>
-                                  <option value="gallup, nm">Gallup, NM</option>
-                                  <option value="flagstaff, az">Flagstaff, AZ</option>
-                                  <option value="winona, az">Winona</option>
-                                  <option value="kingman, az">Kingman</option>
-                                  <option value="barstow, ca">Barstow</option>
-                                  <option value="san bernardino, ca">San Bernardino</option>
-                                  <option value="los angeles, ca">Los Angeles</option>
-                                </select>
-                                <b>End: </b>
-                                <select id="end">
-                                  <option value="chicago, il">Chicago</option>
-                                  <option value="st louis, mo">St Louis</option>
-                                  <option value="joplin, mo">Joplin, MO</option>
-                                  <option value="oklahoma city, ok">Oklahoma City</option>
-                                  <option value="amarillo, tx">Amarillo</option>
-                                  <option value="gallup, nm">Gallup, NM</option>
-                                  <option value="flagstaff, az">Flagstaff, AZ</option>
-                                  <option value="winona, az">Winona</option>
-                                  <option value="kingman, az">Kingman</option>
-                                  <option value="barstow, ca">Barstow</option>
-                                  <option value="san bernardino, ca">San Bernardino</option>
-                                  <option value="los angeles, ca">Los Angeles</option>
-                                </select>
-                            </div>
+                            <h4 class="header-title m-t-0">Map route
+
+                            <small  class="label label-info pull-right"><i id="distance">0</i> km</small>
+                            </h4>
+                            <hr>
                             <div id="map"></div>
                             <div id="warnings-panel">
                                 
@@ -196,30 +174,40 @@
                         </div>
                         <div class="col-sm-6 col-xs-6 col-md-6">
                             <h4 class="header-title m-t-0">Available vehicles
-
-                            <small id="distance" class="label label-info pull-right">0 km</small>
                             </h4>
                              <hr>
                              <table class="table table-striped">
                                  <thead>
                                      <tr>
                                          <th>Vehicle</th>
-                                         <th>Volume capacity</th>
-                                         <th>Weight</th>
-                                         <th>Refrigeration</th>
-                                         <th>Fragile</th>
-                                         <th>Price</th>
+                                         <th class="text-center">
+                                          Volume capacity <br>
+                                          <small id="volume_info" class="label label-primary pull-right">0 VC</small>
+                                          </th>
+                                         <th class="text-center">Weight <br>
+                                          <small id="weight_info" class="label label-success pull-right">0 W</small>
+                                         </th>
+                                         <th class="text-center">Refrigeration <br>
+                                          <small id="refrigeration_info" class="label label-info pull-right">0</small>
+
+                                         </th>
+                                         <th class="text-center">Fragile <br>
+                                         <small id="fragile_info" class="label label-danger pull-right">0</small></th>
+                                         <th>Price x kilometer</th>
+                                         <th>Total Price</th>
                                      </tr>
                                  </thead>
-                                 <tbody>
+                                 <tbody id="vehicles">
                                     @foreach($vehicles as $v)
                                      <tr>
                                          <td>{{ $v->model }} - {{ $v->type->type }}</td>
-                                         <td>{{ $v->volume_capacity }}</td>
-                                         <td>{{ $v->load_capacity }}</td>
-                                         <td>{{ $v->refrigeration }}</td>
-                                         <td>{{ $v->fragile }}</td>
-                                         <td></td>
+                                         <td class="vc">{{ $v->volume_capacity }}</td>
+                                         <td class="lc">{{ $v->load_capacity }}</td>
+                                         <td class="ref">{{ $v->refrigeration }}</td>
+                                         <td class="fragil">{{ $v->fragile }}</td>
+                                         <td class="kpg">@if($v->type->kilometers_per_gallon != 0) {{ $v->fuel->cost / $v->type->kilometers_per_gallon }} @endif</td>
+                                          <td class="total">
+                                          </td>
 
                                      </tr>
                                      @endforeach
@@ -246,94 +234,148 @@
     <script type="text/javascript" src="{{ asset('assets/plugins/parsleyjs/parsley.min.js') }}"></script>
 
     <script type="text/javascript">
+        
+
         $(document).ready(function() {
             $('form').parsley();
         });
+
+        $('#length, #width, #height, #weight').on('keyup',function(){
+          calculate_volumetric_weigth();
+        });
+
+        $('#refrigeration, #fragile').on('change',function(){
+          calculate_volumetric_weigth();
+        });
+
+        function calculate_volumetric_weigth(){
+          var length = $('#length').val();
+          var width = $('#width').val();
+          var height = $('#height').val();
+          var refrigeration = $('#refrigeration').is(':checked')? 1: 0;
+          var fragile = $('#fragile').is(':checked')? 1: 0;
+
+          console.log('refrigeration: '+ refrigeration);
+          console.log('fragile: '+ fragile);
+
+          var weight = parseFloat($('#weight').val());
+
+          var kms = parseFloat($('#distance').html());
+
+          var volume_capacity = (length * width * height)/5000;
+
+          $('#volume_capacity').html(volume_capacity);
+          $('#volume_info').html(volume_capacity + ' VC');
+          $('#weight_info').html(weight + ' W');
+          $('#refrigeration_info').html(refrigeration);
+          $('#fragile_info').html(fragile);
+
+          $('#vehicles tr').each(function(el){
+            console.log('=================================');
+            var vc = parseFloat($(this).find('.vc').html());
+            if(volume_capacity < vc){
+              $(this).find('.vc').removeClass('label-danger').addClass('label-success');
+            }else{
+              $(this).find('.vc').removeClass('label-success').addClass('label-danger');
+            }
+
+            var lc = parseFloat($(this).find('.lc').html());
+            if(weight < lc){
+              $(this).find('.lc').removeClass('label-danger').addClass('label-success');
+            }else{
+              $(this).find('.lc').removeClass('label-success').addClass('label-danger');
+            }
+
+            var ref = parseInt($(this).find('.ref').html().trim());
+             if(refrigeration == ref){
+              $(this).find('.ref').removeClass('label-danger').addClass('label-success');
+            }else{
+              $(this).find('.ref').removeClass('label-success').addClass('label-danger');
+            }
+
+            var fragil = $(this).find('.fragil').html();
+            if(fragile == fragil){
+              $(this).find('.fragil').removeClass('label-danger').addClass('label-success');
+            }else{
+              $(this).find('.fragil').removeClass('label-success').addClass('label-danger');
+            }
+
+            var kpg = parseFloat($(this).find('.kpg').html().trim());
+            var total = $(this).find('.total');
+            console.log('vc');
+            console.log(volume_capacity);
+            console.log(vc);
+            console.log(lc);
+            console.log(ref);
+            console.log(fragil);
+            console.log('kpg: '+ kpg);
+
+            var t = kpg * kms;
+
+
+
+            total.html(t);
+          });
+        }
+        calculate_volumetric_weigth();
     </script>
 
         <script>
       function initMap() {
-        var markerArray = [];
-
-        // Instantiate a directions service.
-        var directionsService = new google.maps.DirectionsService;
-
-        // Create a map and center it on Manhattan.
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 13,
-          center: {lat: 40.771, lng: -73.974}
+          zoom: 4,
+          center: {lat: -0.183503, lng: -78.464876}  // Quito
         });
 
-        // Create a renderer for directions and bind it to the map.
-        var directionsDisplay = new google.maps.DirectionsRenderer({map: map});
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer({
+          draggable: true,
+          map: map,
+          panel: document.getElementById('right-panel')
+        });
 
-        // Instantiate an info window to hold step text.
-        var stepDisplay = new google.maps.InfoWindow;
+        directionsDisplay.addListener('directions_changed', function() {
+          computeTotalDistance(directionsDisplay.getDirections());
+          calculate_volumetric_weigth();
+        });
 
-        // Display the route between the initial start and end selections.
-        calculateAndDisplayRoute(
-            directionsDisplay, directionsService, markerArray, stepDisplay, map);
-        // Listen to change events from the start and end lists.
-        var onChangeHandler = function() {
-          calculateAndDisplayRoute(
-              directionsDisplay, directionsService, markerArray, stepDisplay, map);
-        };
-        document.getElementById('start').addEventListener('change', onChangeHandler);
-        document.getElementById('end').addEventListener('change', onChangeHandler);
+        displayRoute('Conocoto, Quito', 'Caldero, Quito', directionsService,
+            directionsDisplay);
       }
 
-      function calculateAndDisplayRoute(directionsDisplay, directionsService,
-          markerArray, stepDisplay, map) {
-        // First, remove any existing markers from the map.
-        for (var i = 0; i < markerArray.length; i++) {
-          markerArray[i].setMap(null);
-        }
-
-        // Retrieve the start and end locations and create a DirectionsRequest using
-        // WALKING directions.
-        directionsService.route({
-          origin: document.getElementById('start').value,
-          destination: document.getElementById('end').value,
-          travelMode: 'WALKING'
+      function displayRoute(origin, destination, service, display) {
+        service.route({
+          origin: origin,
+          destination: destination,
+          //waypoints: [{location: 'Adelaide, SA'}, {location: 'Broken Hill, NSW'}],
+          waypoints: [],
+          travelMode: 'DRIVING',
+          avoidTolls: true
         }, function(response, status) {
-          // Route the directions and pass the response to a function to create
-          // markers for each step.
           if (status === 'OK') {
-            console.log(response);
-            document.getElementById('distance').innerHTML = response.routes[0].legs[0].distance.value+" km.";
-            document.getElementById('warnings-panel').innerHTML =
-                '<b>' + response.routes[0].warnings + '</b>';
-            directionsDisplay.setDirections(response);
-            showSteps(response, markerArray, stepDisplay, map);
+            display.setDirections(response);
           } else {
-            window.alert('Directions request failed due to ' + status);
+            alert('Could not display directions due to: ' + status);
           }
         });
       }
 
-      function showSteps(directionResult, markerArray, stepDisplay, map) {
-        // For each step, place a marker, and add the text to the marker's infowindow.
-        // Also attach the marker to an array so we can keep track of it and remove it
-        // when calculating new routes.
-        var myRoute = directionResult.routes[0].legs[0];
-        for (var i = 0; i < myRoute.steps.length; i++) {
-          var marker = markerArray[i] = markerArray[i] || new google.maps.Marker;
-          marker.setMap(map);
-          marker.setPosition(myRoute.steps[i].start_location);
-          attachInstructionText(
-              stepDisplay, marker, myRoute.steps[i].instructions, map);
+      function computeTotalDistance(result) {
+        console.log(result);
+        var total = 0;
+        var myroute = result.routes[0];
+        var origen = myroute.legs[0].start_address;
+        var destino = myroute.legs[0].end_address;
+        $('#origen').val(origen);
+        $('#destino').val(destino);
+        for (var i = 0; i < myroute.legs.length; i++) {
+          total += myroute.legs[i].distance.value;
         }
-      }
-
-      function attachInstructionText(stepDisplay, marker, text, map) {
-        google.maps.event.addListener(marker, 'click', function() {
-          // Open an info window when the marker is clicked on, containing the text
-          // of the step.
-          stepDisplay.setContent(text);
-          stepDisplay.open(map, marker);
-        });
+        total = total / 1000;
+        document.getElementById('distance').innerHTML = total;
       }
     </script>
+
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHQdHZjhN23Uc7hNNZ7ozxezHC2avJ4Lw&callback=initMap">
     </script>

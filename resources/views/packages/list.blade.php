@@ -68,7 +68,7 @@
                                     <li>Height: {{ $p->height }}</li>
                                 </ul>
                             </td>
-                            <td>{{ (( $p->length * $p->widht * $p->height ) / 5000 ) }}</td>
+                            <td>{{  $p->volumetricWeight  }}</td>
                             <td>{{ $p->weight }}</td>
                             <td>{{ $p->refrigeration }}</td>
                             <td>{{ $p->fragile }}</td>
