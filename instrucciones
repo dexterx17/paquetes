@@ -1,0 +1,15 @@
+git clone https://github.com/dexterx17/paquetes.git
+
+
+composer install
+
+
+copiar .env.example a .env
+
+configurar usuario y clave de base de datos en el .env
+
+
+php artisan key:generate
+
+
+php artisan migrate:refresh --seed
