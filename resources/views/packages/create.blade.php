@@ -2,7 +2,9 @@
 
 @section('css')
 
-@endsection
+    <!--tablesaw css-->
+    <link href="{{ asset('assets/plugins/tablesaw/dist/tablesaw.css') }}" rel="stylesheet" type="text/css" />
+
   <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -29,8 +31,12 @@
         height:10%;
         text-align: center;
       }
+      #vehicles tr.hidden{
+          opacity: 0.4;
+      }
     </style>
 
+@endsection
 @section('content')
 
 <div class="content">
@@ -162,21 +168,10 @@
 
                     <div class="row">
                         <div class="col-sm-6 col-xs-6 col-md-6">
-                            <h4 class="header-title m-t-0">Map route
-
-                            <small  class="label label-info pull-right"><i id="distance">0</i> km</small>
-                            </h4>
-                            <hr>
-                            <div id="map"></div>
-                            <div id="warnings-panel">
-                                
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-xs-6 col-md-6">
                             <h4 class="header-title m-t-0">Available vehicles
                             </h4>
                              <hr>
-                             <table class="table table-striped">
+                             <table  class="table table-condensed table-striped" data-tablesaw-mode="stack" id="table-vehicles">
                                  <thead>
                                      <tr>
                                          <th>Vehicle</th>
@@ -199,13 +194,13 @@
                                  </thead>
                                  <tbody id="vehicles">
                                     @foreach($vehicles as $v)
-                                     <tr>
+                                     <tr id="{{$v->id}}">
                                          <td>{{ $v->model }} - {{ $v->type->type }}</td>
                                          <td class="vc">{{ $v->volume_capacity }}</td>
                                          <td class="lc">{{ $v->load_capacity }}</td>
                                          <td class="ref">{{ $v->refrigeration }}</td>
                                          <td class="fragil">{{ $v->fragile }}</td>
-                                         <td class="kpg">@if($v->type->kilometers_per_gallon != 0) {{ $v->fuel->cost / $v->type->kilometers_per_gallon }} @endif</td>
+                                         <td class="kpg">@if($v->type->kilometers_per_gallon != 0) {{ number_format(($v->fuel->cost / $v->type->kilometers_per_gallon), 2) }} @else 0 @endif</td>
                                           <td class="total">
                                           </td>
 
@@ -213,6 +208,17 @@
                                      @endforeach
                                  </tbody>
                              </table>
+                        </div>
+                        <div class="col-sm-6 col-xs-6 col-md-6">
+                            <h4 class="header-title m-t-0">Map route
+
+                            <small  class="label label-info pull-right"><i id="distance">0</i> km</small>
+                            </h4>
+                            <hr>
+                            <div id="map"></div>
+                            <div id="warnings-panel">
+                                
+                            </div>
                         </div>
                     </div>
                     <!-- end row -->
@@ -232,10 +238,23 @@
 @section('js')
     <!-- Validation js (Parsleyjs) -->
     <script type="text/javascript" src="{{ asset('assets/plugins/parsleyjs/parsley.min.js') }}"></script>
-
+    
     <script type="text/javascript">
-        
 
+        function sortTable(table, col, reverse) {
+            var tb = table.tBodies[0], // use `<tbody>` to ignore `<thead>` and `<tfoot>` rows
+                tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
+                i;
+            reverse = -((+reverse) || -1);
+            tr = tr.sort(function (a, b) { // sort rows
+                return reverse // `-1 *` if want opposite order
+                    * (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
+                        .localeCompare(b.cells[col].textContent.trim())
+                    );
+            });
+            for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
+        }
+    
         $(document).ready(function() {
             $('form').parsley();
         });
@@ -270,11 +289,15 @@
           $('#refrigeration_info').html(refrigeration);
           $('#fragile_info').html(fragile);
 
+          
+
           $('#vehicles tr').each(function(el){
+              var counter = 0;
             console.log('=================================');
             var vc = parseFloat($(this).find('.vc').html());
             if(volume_capacity < vc){
               $(this).find('.vc').removeClass('label-danger').addClass('label-success');
+              counter++;
             }else{
               $(this).find('.vc').removeClass('label-success').addClass('label-danger');
             }
@@ -282,6 +305,7 @@
             var lc = parseFloat($(this).find('.lc').html());
             if(weight < lc){
               $(this).find('.lc').removeClass('label-danger').addClass('label-success');
+              counter++;
             }else{
               $(this).find('.lc').removeClass('label-success').addClass('label-danger');
             }
@@ -289,6 +313,7 @@
             var ref = parseInt($(this).find('.ref').html().trim());
              if(refrigeration == ref){
               $(this).find('.ref').removeClass('label-danger').addClass('label-success');
+              counter++;
             }else{
               $(this).find('.ref').removeClass('label-success').addClass('label-danger');
             }
@@ -296,6 +321,7 @@
             var fragil = $(this).find('.fragil').html();
             if(fragile == fragil){
               $(this).find('.fragil').removeClass('label-danger').addClass('label-success');
+              counter++;
             }else{
               $(this).find('.fragil').removeClass('label-success').addClass('label-danger');
             }
@@ -312,10 +338,24 @@
 
             var t = kpg * kms;
 
+            total.html(t.toFixed(2));
+            $(this).attr('valores',counter);
+            if(counter<4){
+                $(this).addClass('hidden');
+            }else{
+                $(this).removeClass('hidden');
+            }
 
+        });
+            sortTable(document.getElementById('table-vehicles'),5 , false);
+            var elegido = $('#vehicles tr[valores=4]:first()').attr('id');
 
-            total.html(t);
-          });
+            if(typeof(elegido) !== "undefined"){
+                $('#vehicle_id').val(elegido);
+            }else{
+                alert('Ningun vehiculo cumple las condiciones para transportar este paquete');
+            }
+            
         }
         calculate_volumetric_weigth();
     </script>
