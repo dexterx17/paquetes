@@ -99,7 +99,7 @@
 
                                     <div class="form-group">
                                         <label for="weight">Weight<span class="text-danger">*</span></label>
-                                        <input type="text" name="weight" parsley-trigger="change" required
+                                        <input type="text" name="weight" parsley-trigger="change" required value="0"
                                                 placeholder="Enter weight" class="form-control" id="weight">
                                     </div>
 
@@ -190,6 +190,7 @@
                                          <small id="fragile_info" class="label label-danger pull-right">0</small></th>
                                          <th>Price x kilometer</th>
                                          <th>Total Price</th>
+                                         <th>Formule</th>
                                      </tr>
                                  </thead>
                                  <tbody id="vehicles">
@@ -203,6 +204,7 @@
                                          <td class="kpg">@if($v->type->kilometers_per_gallon != 0) {{ number_format(($v->fuel->cost / $v->type->kilometers_per_gallon), 2) }} @else 0 @endif</td>
                                           <td class="total">
                                           </td>
+                                          <td class="formula"></td>
 
                                      </tr>
                                      @endforeach
@@ -260,6 +262,7 @@
         });
 
         $('#length, #width, #height, #weight').on('keyup',function(){
+            f($(this).val().trim()!="")
           calculate_volumetric_weigth();
         });
 
@@ -268,9 +271,9 @@
         });
 
         function calculate_volumetric_weigth(){
-          var length = $('#length').val();
-          var width = $('#width').val();
-          var height = $('#height').val();
+          var length = parseFloat($('#length').val());
+          var width = parseFloat($('#width').val());
+          var height = parseFloat($('#height').val());
           var refrigeration = $('#refrigeration').is(':checked')? 1: 0;
           var fragile = $('#fragile').is(':checked')? 1: 0;
 
@@ -292,42 +295,58 @@
           
 
           $('#vehicles tr').each(function(el){
-              var counter = 0;
+            var counter = 0;
+            var total_formula = 0;
             console.log('=================================');
             var vc = parseFloat($(this).find('.vc').html());
             if(volume_capacity < vc){
-              $(this).find('.vc').removeClass('label-danger').addClass('label-success');
-              counter++;
+                $(this).find('.vc').removeClass('label-danger').addClass('label-success');
+                total_formula += (vc*0.9);
+                //total_formula += (length*0.9); //descomentar para aumentar el length en la formula
+                //total_formula += (width*0.9); //descomentar para aumentar el width en la formula
+                //total_formula += (height*0.9); //descomentar para aumentar el height en la formula
+                counter++;
             }else{
-              $(this).find('.vc').removeClass('label-success').addClass('label-danger');
+                total_formula += (vc*0.1);
+                //total_formula += (length*0.1); //descomentar para aumentar el length en la formula
+                //total_formula += (width*0.1); //descomentar para aumentar el width en la formula
+                //total_formula += (height*0.1); //descomentar para aumentar el height en la formula
+                $(this).find('.vc').removeClass('label-success').addClass('label-danger');
             }
 
             var lc = parseFloat($(this).find('.lc').html());
             if(weight < lc){
               $(this).find('.lc').removeClass('label-danger').addClass('label-success');
+              total_formula += (lc*0.9);
               counter++;
             }else{
               $(this).find('.lc').removeClass('label-success').addClass('label-danger');
+              total_formula += (lc*0.1);
             }
 
             var ref = parseInt($(this).find('.ref').html().trim());
              if(refrigeration == ref){
               $(this).find('.ref').removeClass('label-danger').addClass('label-success');
               counter++;
+              total_formula += (1*0.9);
             }else{
               $(this).find('.ref').removeClass('label-success').addClass('label-danger');
+              total_formula += (1*0.1);
             }
 
             var fragil = $(this).find('.fragil').html();
             if(fragile == fragil){
-              $(this).find('.fragil').removeClass('label-danger').addClass('label-success');
-              counter++;
+                total_formula += (1*0.9);
+                $(this).find('.fragil').removeClass('label-danger').addClass('label-success');
+                counter++;
             }else{
               $(this).find('.fragil').removeClass('label-success').addClass('label-danger');
+              total_formula += (1*0.1);
             }
 
             var kpg = parseFloat($(this).find('.kpg').html().trim());
             var total = $(this).find('.total');
+            var formula_container = $(this).find('.formula');
             console.log('vc');
             console.log(volume_capacity);
             console.log(vc);
@@ -339,6 +358,8 @@
             var t = kpg * kms;
 
             total.html(t.toFixed(2));
+            formula_container.html(total_formula.toFixed(2));
+
             $(this).attr('valores',counter);
             if(counter<4){
                 $(this).addClass('hidden');

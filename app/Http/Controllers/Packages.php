@@ -31,7 +31,7 @@ class Packages extends Controller
         $vehicles = Vehicle::all();
         $vs = [];
         foreach ($vehicles as $key => $v) {
-            $vs[$key] = $v->model.' - '.$v->type->type;
+            $vs[$v->id] = $v->model.' - '.$v->type->type;
         }
         return view('packages.create', [ 'vehicles' => $vehicles, 'vs' => $vs ]);
     }
