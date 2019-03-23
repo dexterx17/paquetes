@@ -119,18 +119,23 @@
                                         </div>
                                     </div>
 
-                                    
                                     <div class="form-group">
                                         <label for="origen">Origen<span class="text-danger">*</span></label>
-                                        <input type="text" name="origen" parsley-trigger="change" required
-                                                placeholder="Enter origen" class="form-control" id="origen">
+                                        <div class="row">
+                                          <input type="text" name="origen" parsley-trigger="change" required
+                                              placeholder="Enter origen" class="form-control col-lg-10 col-md-10" id="origen">
+                                              <button type="button" class="btn btn-primary col-lg-2 col-md-2" id="btn-origen">Ubicar</button>
+                                        </div>
                                     </div>
 
 
                                     <div class="form-group">
                                         <label for="destino">Destino<span class="text-danger">*</span></label>
-                                        <input type="text" name="destino" parsley-trigger="change" required
-                                                placeholder="Enter destino" class="form-control" id="destino">
+                                        <div class="row">
+                                            <input type="text" name="destino" parsley-trigger="change" required
+                                                placeholder="Enter destino" class="form-control col-lg-10 col-md-10" id="destino">
+                                            <button type="button" class="btn btn-primary col-lg-2 col-md-2" id="btn-destino">Ubicar</button>
+                                        </div>      
                                     </div>
 
                                     <div class="form-group">
@@ -163,70 +168,62 @@
 
        <div class="row">
            
-            <div class="col-12">
-                <div class="card-box">
+            <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                <h4 class="header-title m-t-0">Map route
 
-                    <div class="row">
-                        <div class="col-sm-6 col-xs-6 col-md-6">
-                            <h4 class="header-title m-t-0">Available vehicles
-                            </h4>
-                             <hr>
-                             <table  class="table table-condensed table-striped" data-tablesaw-mode="stack" id="table-vehicles">
-                                 <thead>
-                                     <tr>
-                                         <th>Vehicle</th>
-                                         <th class="text-center">
-                                          Volume capacity <br>
-                                          <small id="volume_info" class="label label-primary pull-right">0 VC</small>
-                                          </th>
-                                         <th class="text-center">Weight <br>
-                                          <small id="weight_info" class="label label-success pull-right">0 W</small>
-                                         </th>
-                                         <th class="text-center">Refrigeration <br>
-                                          <small id="refrigeration_info" class="label label-info pull-right">0</small>
-
-                                         </th>
-                                         <th class="text-center">Fragile <br>
-                                         <small id="fragile_info" class="label label-danger pull-right">0</small></th>
-                                         <th>Price x kilometer</th>
-                                         <th>Total Price</th>
-                                         <th>Formule</th>
-                                     </tr>
-                                 </thead>
-                                 <tbody id="vehicles">
-                                    @foreach($vehicles as $v)
-                                     <tr id="{{$v->id}}">
-                                         <td>{{ $v->model }} - {{ $v->type->type }}</td>
-                                         <td class="vc">{{ $v->volume_capacity }}</td>
-                                         <td class="lc">{{ $v->load_capacity }}</td>
-                                         <td class="ref">{{ $v->refrigeration }}</td>
-                                         <td class="fragil">{{ $v->fragile }}</td>
-                                         <td class="kpg">@if($v->type->kilometers_per_gallon != 0) {{ number_format(($v->fuel->cost / $v->type->kilometers_per_gallon), 2) }} @else 0 @endif</td>
-                                          <td class="total">
-                                          </td>
-                                          <td class="formula"></td>
-
-                                     </tr>
-                                     @endforeach
-                                 </tbody>
-                             </table>
-                        </div>
-                        <div class="col-sm-6 col-xs-6 col-md-6">
-                            <h4 class="header-title m-t-0">Map route
-
-                            <small  class="label label-info pull-right"><i id="distance">0</i> km</small>
-                            </h4>
-                            <hr>
-                            <div id="map"></div>
-                            <div id="warnings-panel">
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end row -->
-
+                <small  class="label label-info pull-right"><i id="distance">0</i> km</small>
+                </h4>
+                <hr>
+                <div id="map"></div>
+                <div id="warnings-panel">
+                    
                 </div>
-            </div><!-- end col-->
+            </div>
+            <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                <h4 class="header-title m-t-0">Available vehicles
+                </h4>
+                 <hr>
+                 <table  class="table table-condensed table-striped" data-tablesaw-mode="stack" id="table-vehicles">
+                     <thead>
+                         <tr>
+                             <th>Vehicle</th>
+                             <th class="text-center">
+                              Volume capacity <br>
+                              <small id="volume_info" class="label label-primary pull-right">0 VC</small>
+                              </th>
+                             <th class="text-center">Weight <br>
+                              <small id="weight_info" class="label label-success pull-right">0 W</small>
+                             </th>
+                             <th class="text-center">Refrigeration <br>
+                              <small id="refrigeration_info" class="label label-info pull-right">0</small>
+
+                             </th>
+                             <th class="text-center">Fragile <br>
+                             <small id="fragile_info" class="label label-danger pull-right">0</small></th>
+                             <th>Price x kilometer</th>
+                             <th>Total Price</th>
+                             <th>Formule</th>
+                         </tr>
+                     </thead>
+                     <tbody id="vehicles">
+                        @foreach($vehicles as $v)
+                         <tr id="{{$v->id}}">
+                             <td>{{ $v->model }} - {{ $v->type->type }}</td>
+                             <td class="vc">{{ $v->volume_capacity }}</td>
+                             <td class="lc">{{ $v->load_capacity }}</td>
+                             <td class="ref">{{ $v->refrigeration }}</td>
+                             <td class="fragil">{{ $v->fragile }}</td>
+                             <td class="kpg">@if($v->type->kilometers_per_gallon != 0) {{ number_format(($v->fuel->cost / $v->type->kilometers_per_gallon), 2) }} @else 0 @endif</td>
+                              <td class="total">
+                              </td>
+                              <td class="formula"></td>
+
+                         </tr>
+                         @endforeach
+                     </tbody>
+                 </table>
+            </div>
+                        
 
         </div>
         <!-- end row --> 
@@ -256,7 +253,7 @@
             });
             for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
         }
-    
+
         $(document).ready(function() {
             $('form').parsley();
         });
@@ -382,27 +379,100 @@
     </script>
 
         <script>
-      function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: {lat: -0.183503, lng: -78.464876}  // Quito
+
+        var geocoder;
+        var map;
+        var directionsService;
+        var directionsDisplay;
+
+        var puntoOrigen;
+        var puntoDestino;
+
+        $('#btn-origen').on('click',function(){
+            console.log('');
+            geocodeOrigen(geocoder,map);
         });
 
-        var directionsService = new google.maps.DirectionsService;
-        var directionsDisplay = new google.maps.DirectionsRenderer({
-          draggable: true,
-          map: map,
-          panel: document.getElementById('right-panel')
+        $('#btn-destino').on('click',function(){
+            console.log('');
+            geocodeDestino(geocoder,map);
         });
 
-        directionsDisplay.addListener('directions_changed', function() {
-          computeTotalDistance(directionsDisplay.getDirections());
-          calculate_volumetric_weigth();
-        });
+        function geocodeOrigen(geocoder, resultsMap) {
+            var address = document.getElementById('origen').value;
+            geocoder.geocode({'address': address}, function(results, status) {
+              if (status === 'OK') {
+                resultsMap.setCenter(results[0].geometry.location);
+                puntoOrigen = new google.maps.Marker({
+                  map: resultsMap,
+                  position: results[0].geometry.location
+                });
+                calcularRuta();
+                
+              } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+              }
+            });
 
-        displayRoute('Conocoto, Quito', 'Caldero, Quito', directionsService,
-            directionsDisplay);
-      }
+
+        }
+
+        function geocodeDestino(geocoder, resultsMap) {
+            var address = document.getElementById('destino').value;
+            geocoder.geocode({'address': address}, function(results, status) {
+              if (status === 'OK') {
+                resultsMap.setCenter(results[0].geometry.location);
+                puntoDestino = new google.maps.Marker({
+                  map: resultsMap,
+                  position: results[0].geometry.location
+                });
+                calcularRuta();
+              } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+              }
+            });
+        }
+
+        function calcularRuta(){
+
+            console.log('origen');
+            console.log(puntoOrigen);
+
+            console.log('destino');
+            console.log(puntoDestino);
+
+            var origen 
+            if((typeof puntoOrigen !== "undefined") && (typeof puntoDestino !== "undefined")){
+
+                 var origen = document.getElementById('origen').value;
+                 var destino = document.getElementById('destino').value;
+                displayRoute(origen, destino, directionsService, directionsDisplay);
+            }
+        }
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 4,
+              center: {lat: -0.183503, lng: -78.464876}  // Quito
+            });
+
+            directionsService = new google.maps.DirectionsService;
+            directionsDisplay = new google.maps.DirectionsRenderer({
+              draggable: true,
+              map: map,
+              panel: document.getElementById('right-panel')
+            });
+
+            geocoder = new google.maps.Geocoder();
+
+            directionsDisplay.addListener('directions_changed', function() {
+              computeTotalDistance(directionsDisplay.getDirections());
+              calculate_volumetric_weigth();
+            });
+
+
+         
+        }
 
       function displayRoute(origin, destination, service, display) {
         service.route({
