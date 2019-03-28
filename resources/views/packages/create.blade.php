@@ -259,7 +259,7 @@
         });
 
         $('#length, #width, #height, #weight').on('keyup',function(){
-            f($(this).val().trim()!="")
+            ($(this).val().trim()!="")
           calculate_volumetric_weigth();
         });
 
