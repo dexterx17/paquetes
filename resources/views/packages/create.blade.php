@@ -10,7 +10,7 @@
        * element that contains the map. */
       #map {
         width: 100%;
-        height: 400px;
+        height: 350px;
       }
       /* Optional: Makes the sample page fill the window. */
       #floating-panel {
@@ -124,7 +124,7 @@
                                         <div class="row">
                                           <input type="text" name="origen" parsley-trigger="change" required
                                               placeholder="Enter origen" class="form-control col-lg-10 col-md-10" id="origen">
-                                              <button type="button" class="btn btn-primary col-lg-2 col-md-2" id="btn-origen">Ubicar</button>
+                                              <button type="button" class="btn btn-primary col-lg-2 col-md-2" id="btn-origen">Locate</button>
                                         </div>
                                     </div>
 
@@ -134,7 +134,7 @@
                                         <div class="row">
                                             <input type="text" name="destino" parsley-trigger="change" required
                                                 placeholder="Enter destino" class="form-control col-lg-10 col-md-10" id="destino">
-                                            <button type="button" class="btn btn-primary col-lg-2 col-md-2" id="btn-destino">Ubicar</button>
+                                            <button type="button" class="btn btn-primary col-lg-2 col-md-2" id="btn-destino">Locate</button>
                                         </div>      
                                     </div>
 
@@ -143,9 +143,9 @@
                                         {{ Form::select('vehicle_id', $vs, '', ['class'=> 'form-control', 'id'=> 'vehicle_id', 'required' => 'required'] ) }}
                                     </div>
 
-                                    <div class="form-group text-right m-b-0">
+                                    <div class="form-group text-center m-b-0">
                                         <button class="btn btn-primary waves-effect waves-light" type="submit">
-                                            Submit
+                                            Submit Package
                                         </button>
                                         <button type="reset" class="btn btn-secondary waves-effect m-l-5">
                                             Cancel
@@ -168,7 +168,7 @@
 
        <div class="row">
            
-            <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+            <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
                 <h4 class="header-title m-t-0">Map route
 
                 <small  class="label label-info pull-right"><i id="distance">0</i> km</small>
@@ -179,7 +179,7 @@
                     
                 </div>
             </div>
-            <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+            <!--<div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
                 <h4 class="header-title m-t-0">Available vehicles
                 </h4>
                  <hr>
@@ -222,9 +222,104 @@
                          @endforeach
                      </tbody>
                  </table>
+            </div>-->
+            
+            <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                <table class="table table-condensed table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th rowspan="3">
+                                Entity Type
+                            </th>
+                            <th colspan="4" class="text-center">Filtering Values</th>
+                            <th colspan="6" class="text-center">Ranking Values</th>
+                            <th rowspan="3">Ranking Function <small>Total</small></th>
+                            <th rowspan="3">Shipping price</th>
+                        </tr>
+                        <tr>
+                            <th>Length <small>cm</small></th>
+                            <th>Width <small>cm</small></th>
+                            <th>Height <small>cm</small></th>
+                            <th>Weight <small>cm</small></th>
+                            <th colspan="2">
+                                <table>
+                                <tr><td colspan="2">Refrigeration</td></tr>
+                                <tr>
+                                    <th>Min_rf</th>
+                                    <th>Max_rf</th>
+                                </tr>
+                                </table>
+                            </th>
+                            <th>Length <small>cm</small></th>
+                            <th>Width <small>cm</small></th>
+                            <th>Height <small>cm</small></th>
+                            <th>Weight <small>cm</small></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Packet</th>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>500</td>
+                            <td>-26</td>
+                            <td>-24</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>500</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <th>Car 1</th>
+                            <td>200</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>700</td>
+                            <td>-26</td>
+                            <td>-24</td>
+                            <td>200</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>500</td>
+                            <td>0.84</td>
+                            <td>32.99</td>
+                        </tr>
+                        <tr>
+                            <th>Van 1</th>
+                            <td>300</td>
+                            <td>150</td>
+                            <td>150</td>
+                            <td>1000</td>
+                            <td>-26</td>
+                            <td>-24</td>
+                            <td>300</td>
+                            <td>150</td>
+                            <td>150</td>
+                            <td>1000</td>
+                            <td>0.63</td>
+                            <td>36.84</td>
+                        </tr>
+                        <tr>
+                            <th>Truck 1</th>
+                            <td>500</td>
+                            <td>260</td>
+                            <td>500</td>
+                            <td>7000</td>
+                            <td>-26</td>
+                            <td>-24</td>
+                            <td>500</td>
+                            <td>260</td>
+                            <td>600</td>
+                            <td>7000</td>
+                            <td>0.37</td>
+                            <td>56.48</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-                        
-
         </div>
         <!-- end row --> 
 
