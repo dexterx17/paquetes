@@ -18,6 +18,8 @@ class CreateVehicleTypesTable extends Migration
             $table->string('type');
             $table->text('description')->nullable();
             $table->double('kilometers_per_gallon')->nullable();
+            $table->double('cost_per_kilometer')->nullable();
+            $table->double('maintenance')->nullable();
             $table->timestamps();
         });
     }

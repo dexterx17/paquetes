@@ -10,11 +10,11 @@ class Package extends Model
 
     protected $fillable = [
     	'description', 'length', 'width', 'height', 
-    	'weight', 'refrigeration', 'fragile', 'origen', 'destino', 'vehicle_id'
+    	'weight', 'refrigeration', 'origen', 'destino'
     ];
 
     public function vehicle(){
-    	return $this->belongsTo('App\Vehicle');
+        return $this->hasOne('App\Vehicle');
     }
 
     public function getVolumetricWeightAttribute(){

@@ -137,7 +137,12 @@
                                             <button type="button" class="btn btn-primary col-lg-2 col-md-2" id="btn-destino">Locate</button>
                                         </div>      
                                     </div>
-                                    
+
+                                    <div class="form-group">
+                                        <label for="vehicle_type_id">Vechicle asigned<span class="text-danger">*</span></label>
+                                        {{ Form::select('vehicle_id', $vs, '', ['class'=> 'form-control', 'id'=> 'vehicle_id', 'required' => 'required'] ) }}
+                                    </div>
+
                                     <div class="form-group text-center m-b-0">
                                         <button class="btn btn-primary waves-effect waves-light" type="submit">
                                             Submit Package

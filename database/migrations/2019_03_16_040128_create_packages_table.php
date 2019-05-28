@@ -21,16 +21,30 @@ class CreatePackagesTable extends Migration
             $table->double('height');
             $table->double('weight');
             $table->boolean('refrigeration')->default(false);
-            $table->boolean('fragile')->default(false);
+            //$table->boolean('fragile')->default(false);
             
             $table->string('origen');
             $table->string('destino');
 
+
+            $table->timestamps();
+        }); 
+
+        Schema::create('asigned_vehicle', function (Blueprint $table) {
+            $table->integer('package_id')->unsigned();
+            $table->primary('package_id');
+            $table->foreign('package_id')->references('id')->on('packages');
+            
             $table->integer('vehicle_id')->unsigned();
             $table->foreign('vehicle_id')->references('id')->on('vehicles');
+            $table->double('distance');
+            $table->double('cost');
+            $table->double('value');
 
             $table->timestamps();
         });
+
+
     }
 
     /**
@@ -40,6 +54,7 @@ class CreatePackagesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('asigned_vehicle');
         Schema::dropIfExists('packages');
     }
 }
