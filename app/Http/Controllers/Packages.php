@@ -29,11 +29,7 @@ class Packages extends Controller
     public function create()
     {   
         $vehicles = Vehicle::all();
-        $vs = [];
-        foreach ($vehicles as $key => $v) {
-            $vs[$v->id] = $v->model.' - '.$v->type->type;
-        }
-        return view('packages.create', [ 'vehicles' => $vehicles, 'vs' => $vs ]);
+        return view('packages.create', [ 'vehicles' => $vehicles]);
     }
 
     /**
@@ -52,15 +48,33 @@ class Packages extends Controller
             $package->refrigeration = false;
         }
 
-        if($request->has('fragile')){
-            $package->fragile = true;
-        }else{
-            $package->fragile = false;
-        }
-
         $package->save();
 
         return redirect()->route('packages.index');
+    }
+
+    /**
+     * Calcula el mejor vehiculo en base a un proceso de 3 etapas
+     * 
+     * La primera etapa verifica cual vehiculo cumple con los requerimientos del paquete
+     *  
+     * La segunda etapa calcula cual es el vehiculo mas optimo aplicando un formula
+     * 
+     * La tercera etapa calcula el costo minimo y define al vehiculo asignado
+     * 
+     * 
+     * @param  [type] $package  [description]
+     * @param  [type] $distance [description]
+     * @return [type]           [description]
+     */
+    private function calculate_best_vehicle($package, $distance){
+        //PRIMERA ETAPA
+        //obtenemos el listado de todos los vehiculos que cumplan con las especificaciones del paquete
+        $vehicles = Vehicle::all();
+
+        foreach ($vehicles as $key => $v) {
+            $vs[$v->id] = $v->model.' - '.$v->type->type;
+        }
     }
 
     /**
@@ -104,13 +118,6 @@ class Packages extends Controller
         }else{
             $package->refrigeration = false;
         }
-
-        if($request->has('fragile')){
-            $package->fragil = true;
-        }else{
-            $package->fragil = false;
-        }
-
 
         $package->save();
 

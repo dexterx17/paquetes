@@ -74,68 +74,83 @@
                             <div class="p-20">
                                 <form action="{{ route('packages.store') }}" data-parsley-validate novalidate  method="POST" >
                                 {{ csrf_field() }}
-                                
-                                    <div class="form-group">
-                                        <label for="description">Description<span class="text-danger">*</span></label>
-                                        <input type="text" name="description" parsley-trigger="change" required 
-                                                placeholder="Enter description" class="form-control" id="description">
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="length">Volume capacity <small id="volume_capacity" class="label label-info">(0.0)</small> </label>
-                                        
-                                        <div class="row">
-                                            <small for="length" class="col-lg-1 col-md-1">Length: <span class="text-danger">*</span> </small>
-                                            <input type="text" name="length" parsley-trigger="change" required value="0"
-                                                    placeholder="Enter length" class="form-control col-lg-3 col-md-3" id="length">
-                                            <small for="length" class="col-lg-1 col-md-1">Width: <span class="text-danger">*</span> </small>
-                                            <input type="text" name="width" parsley-trigger="change" required value="0"
-                                                    placeholder="Enter width" class="form-control col-lg-3 col-md-3" id="width">
-                                            <small for="length" class="col-lg-1 col-md-1">Height: <span class="text-danger">*</span> </small>
-                                            <input type="text" name="height" parsley-trigger="change" required value="0"
-                                                    placeholder="Enter height" class="form-control col-lg-3 col-md-3" id="height">
+
+                                    <div class="row">
+                                        <div class="col-sm-6 col-lg-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label for="description">Description<span class="text-danger">*</span></label>
+                                                <input type="text" name="description" parsley-trigger="change" required 
+                                                        placeholder="Enter description" class="form-control" id="description">
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label for="length">Volume capacity <small id="volume_capacity" class="label label-info">(0.0)</small> </label>
+                                                
+                                                <div class="row">
+                                                    <small for="length" class="col-lg-1 col-md-1">Length: <span class="text-danger">*</span> </small>
+                                                    <input type="text" name="length" parsley-trigger="change" required value="0"
+                                                            placeholder="Enter length" class="form-control col-lg-3 col-md-3" id="length">
+                                                    <small for="width" class="col-lg-1 col-md-1">Width: <span class="text-danger">*</span> </small>
+                                                    <input type="text" name="width" parsley-trigger="change" required value="0"
+                                                            placeholder="Enter width" class="form-control col-lg-3 col-md-3" id="width">
+                                                    <small for="height" class="col-lg-1 col-md-1">Height: <span class="text-danger">*</span> </small>
+                                                    <input type="text" name="height" parsley-trigger="change" required value="0"
+                                                            placeholder="Enter height" class="form-control col-lg-3 col-md-3" id="height">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="weight">Weight<span class="text-danger">*</span></label>
+                                                <input type="text" name="weight" parsley-trigger="change" required value="0"
+                                                        placeholder="Enter weight" class="form-control" id="weight">
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <div class="checkbox">
+                                                    <input id="refrigeration" type="checkbox" name="refrigeration">
+                                                    <label for="refrigeration"> Needs refrigeration </label>
+                                                </div>
+                                                <div class="row">
+                                                    <small for="min_temp" class="col-lg-2 col-md-2">Min temperature: <span class="text-danger">*</span> </small>
+                                                    <input type="number" name="min_temp" parsley-trigger="change" value="0"
+                                                            placeholder="Enter length" class="form-control col-lg-4 col-md-4" id="min_temp">
+                                                    <small for="max_temp" class="col-lg-2 col-md-2">Max temperature: <span class="text-danger">*</span> </small>
+                                                    <input type="number" name="max_temp" parsley-trigger="change"  value="0"
+                                                            placeholder="Enter width" class="form-control col-lg-4 col-md-4" id="max_temp">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="origen">Origen<span class="text-danger">*</span></label>
+                                                <div class="row">
+                                                  <input type="text" name="origen" parsley-trigger="change" required
+                                                      placeholder="Enter origen" class="form-control col-lg-10 col-md-10" id="origen">
+                                                      <button type="button" class="btn btn-primary col-lg-2 col-md-2" id="btn-origen">Locate</button>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="destino">Destino<span class="text-danger">*</span></label>
+                                                <div class="row">
+                                                    <input type="text" name="destino" parsley-trigger="change" required
+                                                        placeholder="Enter destino" class="form-control col-lg-10 col-md-10" id="destino">
+                                                    <button type="button" class="btn btn-primary col-lg-2 col-md-2" id="btn-destino">Locate</button>
+                                                </div>      
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div class="col-sm-6 col-lg-6 col-xs-12">
+                                            <h4 class="header-title m-t-0">Map route
 
-                                    <div class="form-group">
-                                        <label for="weight">Weight<span class="text-danger">*</span></label>
-                                        <input type="text" name="weight" parsley-trigger="change" required value="0"
-                                                placeholder="Enter weight" class="form-control" id="weight">
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <div class="checkbox">
-                                            <input id="refrigeration" type="checkbox" name="refrigeration">
-                                            <label for="refrigeration"> Needs refrigeration </label>
+                                            <small  class="label label-info pull-right"><i id="distance">0</i> km</small>
+                                            </h4>
+                                            <hr>
+                                            <div id="map"></div>
+                                            <div id="warnings-panel">
+                                                
+                                            </div>
                                         </div>
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <div class="checkbox">
-                                            <input id="fragile" type="checkbox" name="fragile">
-                                            <label for="fragile"> Is fragil </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="origen">Origen<span class="text-danger">*</span></label>
-                                        <div class="row">
-                                          <input type="text" name="origen" parsley-trigger="change" required
-                                              placeholder="Enter origen" class="form-control col-lg-10 col-md-10" id="origen">
-                                              <button type="button" class="btn btn-primary col-lg-2 col-md-2" id="btn-origen">Locate</button>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label for="destino">Destino<span class="text-danger">*</span></label>
-                                        <div class="row">
-                                            <input type="text" name="destino" parsley-trigger="change" required
-                                                placeholder="Enter destino" class="form-control col-lg-10 col-md-10" id="destino">
-                                            <button type="button" class="btn btn-primary col-lg-2 col-md-2" id="btn-destino">Locate</button>
-                                        </div>      
                                     </div>
                                     
                                     <div class="form-group text-center m-b-0">
@@ -164,15 +179,6 @@
        <div class="row">
            
             <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
-                <h4 class="header-title m-t-0">Map route
-
-                <small  class="label label-info pull-right"><i id="distance">0</i> km</small>
-                </h4>
-                <hr>
-                <div id="map"></div>
-                <div id="warnings-panel">
-                    
-                </div>
             </div>
             <!--<div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
                 <h4 class="header-title m-t-0">Available vehicles

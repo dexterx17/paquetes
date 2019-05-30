@@ -21,6 +21,8 @@ class CreatePackagesTable extends Migration
             $table->double('height');
             $table->double('weight');
             $table->boolean('refrigeration')->default(false);
+            $table->double('min_temp')->nullable();
+            $table->double('max_temp')->nullable();
             //$table->boolean('fragile')->default(false);
             
             $table->string('origen');

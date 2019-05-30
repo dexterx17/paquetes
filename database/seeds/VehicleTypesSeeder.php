@@ -45,7 +45,7 @@ class VehicleTypesSeeder extends Seeder
         $truck = new Vehicle_type();
         $truck->kilometers_per_gallon = 4;
         $truck->cost_per_kilometer = 0.4;
-        $trcuk->maintenance = 0.30;
+        $truck->maintenance = 0.30;
         $truck->type = "Truck";
         $truck->save();
 

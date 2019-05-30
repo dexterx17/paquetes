@@ -10,7 +10,8 @@ class Package extends Model
 
     protected $fillable = [
     	'description', 'length', 'width', 'height', 
-    	'weight', 'refrigeration', 'origen', 'destino'
+    	'weight', 'refrigeration', 'origen', 'destino',
+        'min_temp', 'max_temp'
     ];
 
     public function vehicle(){
