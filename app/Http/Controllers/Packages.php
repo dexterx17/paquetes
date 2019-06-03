@@ -150,7 +150,9 @@ class Packages extends Controller
      */
     public function show($id)
     {
-        //
+        $package = Package::find($id);
+
+        return view('packages.info',[ 'package' => $package]);
     }
 
     /**

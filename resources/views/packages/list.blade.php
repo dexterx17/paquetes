@@ -79,6 +79,7 @@
                                 </table>
                             </td>
                             <td>
+                                <a class="btn btn-sm waves-effect btn-primary" href="{{ route('packages.show',$p->id) }}"> <i class="fa fa-eye"></i> </a>
                                 <a class="btn btn-sm waves-effect btn-secondary" href="{{ route('packages.edit',$p->id) }}"> <i class="fa fa-edit"></i> </a>
                                 <a class="btn btn-sm waves-effect waves-light btn-danger" href="{{ route('packages.destroy',$p->id) }}"> <i class="fa fa-remove"></i> </a>
                             </td>
