@@ -109,7 +109,7 @@ class Packages extends Controller
 
 
         //TERCERA ETAPA
-        ////recorremos los vehiculos que pasaron la primera etapa
+        ////recorremos los vehiculos que pasaron la segunda etapa
         foreach ($vehicles as $key => $vehicle) {
             //Salario de conductor
             $h = 20;
@@ -120,16 +120,21 @@ class Packages extends Controller
             $vehicle->cost = $cost;
         }
 
+        //Ordenamos el listado de vehiculo en base al COSTO
+        $vehicle = $vehicles->sortByDesc('cost');
         
-        $winner = $vehicles->first();
-
-        $asigned = new Asigned_vehicle();
-        $asigned->vehicle_id = $winner->id;
-        $asigned->package_id = $package->id;
-        $asigned->distance = $distance;
-        $asigned->cost = $winner->cost;
-        $asigned->value = $winner->dom; //Ranking formule
-        $asigned->save();
+        ////recorremos los vehiculos que pasaron las 3 etapa
+        foreach ($vehicles as $key => $vehicle) {
+            $asigned = new Asigned_vehicle();
+            $asigned->vehicle_id = $vehicle->id;
+            $asigned->package_id = $package->id;
+            $asigned->distance = $distance;
+            $asigned->cost = $vehicle->cost;
+            $asigned->value = $vehicle->dom; //Ranking formule
+            if($key==0)
+                $asigned->winner = true;
+            $asigned->save();
+        } 
 
         return $vehicles;
     }
@@ -189,6 +194,8 @@ class Packages extends Controller
      */
     public function destroy($id)
     {
-        //
+        $package = Package::find($id);
+        $package->delete();
+        return redirect()->route('packages.index');
     }
 }

@@ -46,12 +46,10 @@
                         <thead>
                         <tr>
                             <th>Description</th>
-                            <th>Dimensions</th>
-                            <th>Volumentric Weight</th>
-                            <th>Weight</th>
+                            <th>Dimensions</th>h>
                             <th>Refrigeration</th>
-                            <th>Fragile</th>
                             <th>Route</th>
+                            <th>Vehicle</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -66,16 +64,23 @@
                                     <li>Lenght: {{ $p->length }}</li>
                                     <li>Width: {{ $p->width }}</li>
                                     <li>Height: {{ $p->height }}</li>
+                                    <li>Weight: {{ $p->weight }}</li>
                                 </ul>
                             </td>
-                            <td>{{  $p->volumetricWeight  }}</td>
-                            <td>{{ $p->weight }}</td>
-                            <td>{{ $p->refrigeration }}</td>
-                            <td>{{ $p->fragile }}</td>
-                            <td>{{ $p->origen }} - {{ $p->destino }} </td>
+                            <td>{{ $p->min_temp }} / {{ $p->max_temp }}</td>
+                            <td>{{ $p->origen }} <br> {{ $p->destino }} </td>
+                            <td>
+                                <table class="table table-condensed">
+                                @foreach($p->vehicles as $v)
+                                    <tr @if($v->winner) class="bg-success" @endif>
+                                        <td>{{ $v->vehicle->model }} </td><td>{{ $v->cost }} $</td><td> {{ $v->value }} </td>
+                                    </tr>
+                                @endforeach
+                                </table>
+                            </td>
                             <td>
                                 <a class="btn btn-sm waves-effect btn-secondary" href="{{ route('packages.edit',$p->id) }}"> <i class="fa fa-edit"></i> </a>
-                                <button class="btn btn-sm waves-effect waves-light btn-danger"> <i class="fa fa-remove"></i> </button>
+                                <a class="btn btn-sm waves-effect waves-light btn-danger" href="{{ route('packages.destroy',$p->id) }}"> <i class="fa fa-remove"></i> </a>
                             </td>
                         </tr>
                         @endforeach

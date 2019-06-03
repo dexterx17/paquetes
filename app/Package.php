@@ -14,8 +14,8 @@ class Package extends Model
         'min_temp', 'max_temp'
     ];
 
-    public function vehicle(){
-        return $this->hasOne('App\Vehicle');
+    public function vehicles(){
+        return $this->hasMany('App\Asigned_vehicle');
     }
 
     public function getVolumetricWeightAttribute(){
