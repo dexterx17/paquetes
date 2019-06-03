@@ -73,10 +73,10 @@ class Packages extends Controller
         //PRIMERA ETAPA
         //obtenemos el listado de todos los vehiculos que cumplan con las especificaciones del paquete
         $vehicles = Vehicle::where('height','>=',$package->height)
-                           ->where('width','>=',$package->height)
-                           ->where('length','>=',$package->height)
-                           ->where('weight','>=',$package->height)
-                           ->where('refrigeration','=',$package->refrigeration)
+                           ->where('width','>=',$package->width)
+                           ->where('length','>=',$package->length)
+                           ->where('weight','>=',$package->weight)
+                           ->where('refrigeration','=',($package->refrigeration ? 1 : 0))
                            ->get();
 
         //si el paquete requiere refrigeracion
@@ -98,8 +98,11 @@ class Packages extends Controller
             $height = $package->height / $vehicle->height;
             $length = $package->length / $vehicle->length;
             $weight = $package->weight / $vehicle->weight;
-
-            $refrigeration = ($package->max_temp - $package->min_temp) / ( $vehicle->max_rf - $vehicle->min_rf) ;
+            if($package->refrigeration){
+                $refrigeration = ($package->max_temp - $package->min_temp) / ( $vehicle->max_rf - $vehicle->min_rf) ;
+            }else{
+                $refrigeration = 0;
+            }
             //$dom = ($w * $width) + ($w * $height) + ($w * $length) + ($w * $weight) + ( $w * $refrigeration);
             $dom =  $w * ($width + $height + $length + $weight + $refrigeration);
             $vehicle->dom = $dom;
