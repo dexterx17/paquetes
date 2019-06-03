@@ -9,7 +9,7 @@ class Asigned_vehicle extends Model
     protected $table = "asigned_vehicle";
 
     protected $fillable = [
-    	'package_id', 'vehicle_id', 'distance', 'cost', 'value'
+    	'package_id', 'vehicle_id', 'distance', 'cost', 'value','winner'
     ];
 
     public $primaryKey = "package_id";

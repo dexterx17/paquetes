@@ -18,10 +18,13 @@ class CreateVehiclesTable extends Migration
             $table->string('model')->nullable();
             $table->string('plaque')->nullable();
             $table->boolean('refrigeration');
-            $table->boolean('fragile');
             $table->boolean('available')->default(true);
-            $table->double('volume_capacity');
-            $table->double('load_capacity');
+            $table->double('length');
+            $table->double('width');
+            $table->double('height');
+            $table->double('weight');
+            $table->integer('min_rf')->nullable();
+            $table->integer('max_rf')->nullable();
             $table->integer('vehicle_type_id')->unsigned();
             $table->foreign('vehicle_type_id')->references('id')->on('vehicle_types');
             $table->integer('fuel_type_id')->unsigned();

@@ -42,6 +42,7 @@ class CreatePackagesTable extends Migration
             $table->double('distance');
             $table->double('cost');
             $table->double('value');
+            $table->boolean('winner')->default(false);
 
             $table->timestamps();
         });

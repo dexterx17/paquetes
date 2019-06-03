@@ -141,9 +141,12 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-lg-6 col-xs-12">
-                                            <h4 class="header-title m-t-0">Map route
+                                            <h4 class="header-title m-t-0">Map
 
-                                            <small  class="label label-info pull-right"><i id="distance">0</i> km</small>
+                                            <small class="pull-right"> 
+                                              <label for="distance">Distance</label>
+                                                <input type="text" name="distance" id="distance" readonly="readonly">
+                                              </small>
                                             </h4>
                                             <hr>
                                             <div id="map"></div>
@@ -599,7 +602,7 @@
           total += myroute.legs[i].distance.value;
         }
         total = total / 1000;
-        document.getElementById('distance').innerHTML = total;
+        document.getElementById('distance').value = total;
       }
     </script>
 

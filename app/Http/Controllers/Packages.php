@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Package;
 use App\Vehicle;
+use App\Asigned_vehicle;
 
 class Packages extends Controller
 {
@@ -47,8 +48,9 @@ class Packages extends Controller
         }else{
             $package->refrigeration = false;
         }
-
         $package->save();
+
+        $this->calculate_best_vehicle($package, $request->distance);
 
         return redirect()->route('packages.index');
     }
@@ -70,11 +72,66 @@ class Packages extends Controller
     private function calculate_best_vehicle($package, $distance){
         //PRIMERA ETAPA
         //obtenemos el listado de todos los vehiculos que cumplan con las especificaciones del paquete
-        $vehicles = Vehicle::all();
+        $vehicles = Vehicle::where('height','>=',$package->height)
+                           ->where('width','>=',$package->height)
+                           ->where('length','>=',$package->height)
+                           ->where('weight','>=',$package->height)
+                           ->where('refrigeration','=',$package->refrigeration)
+                           ->get();
 
-        foreach ($vehicles as $key => $v) {
-            $vs[$v->id] = $v->model.' - '.$v->type->type;
+        //si el paquete requiere refrigeracion
+        if($package->refrigeration){
+            //verificamos cual vehiculo cumple con la temperatura especficada
+            $vehicles = $vehicles->where('min_rf','>=',$package->min_temp)
+                                 ->where('max_rf','<=',$package->max_temp);
         }
+        //dd($vehicles);
+
+        //SEGUNDA ETAPA
+        //recorremos los vehiculos que pasaron la primera etapa
+        foreach ($vehicles as $key => $vehicle) {
+            //Variable de ni se que
+            $w = 0.2;
+
+            //aplicamos la formula para cada parametro
+            $width = $package->width / $vehicle->width;
+            $height = $package->height / $vehicle->height;
+            $length = $package->length / $vehicle->length;
+            $weight = $package->weight / $vehicle->weight;
+
+            $refrigeration = ($package->max_temp - $package->min_temp) / ( $vehicle->max_rf - $vehicle->min_rf) ;
+            //$dom = ($w * $width) + ($w * $height) + ($w * $length) + ($w * $weight) + ( $w * $refrigeration);
+            $dom =  $w * ($width + $height + $length + $weight + $refrigeration);
+            $vehicle->dom = $dom;
+        }
+        //Ordenamos el listado de vehiculo en base al DOM
+        $vehicle = $vehicles->sortByDesc('dom');
+
+
+        //TERCERA ETAPA
+        ////recorremos los vehiculos que pasaron la primera etapa
+        foreach ($vehicles as $key => $vehicle) {
+            //Salario de conductor
+            $h = 20;
+            $kv = $vehicle->type->cost_per_kilometer;
+            $mv = $vehicle->type->maintenance;
+            //dd($distance,$kv, $mv,$h);
+            $cost = $distance * ($kv + $mv) + $h;
+            $vehicle->cost = $cost;
+        }
+
+        
+        $winner = $vehicles->first();
+
+        $asigned = new Asigned_vehicle();
+        $asigned->vehicle_id = $winner->id;
+        $asigned->package_id = $package->id;
+        $asigned->distance = $distance;
+        $asigned->cost = $winner->cost;
+        $asigned->value = $winner->dom; //Ranking formule
+        $asigned->save();
+
+        return $vehicles;
     }
 
     /**
