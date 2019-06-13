@@ -15,7 +15,9 @@ class Vehicle_types extends Controller
      */
     public function index()
     {
-        //
+        $types = Vehicle_type::all();
+        
+        return view('vehicle_types.list', [ 'types' => $types ]);
     }
 
     /**
@@ -25,7 +27,7 @@ class Vehicle_types extends Controller
      */
     public function create()
     {
-        //
+        return view('vehicle_types.create', [ ]);
     }
 
     /**
@@ -36,7 +38,11 @@ class Vehicle_types extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $type = new Vehicle_type($request->all());
+
+        $type->save();
+
+        return redirect()->route('vehicle_types.index');
     }
 
     /**
@@ -58,7 +64,9 @@ class Vehicle_types extends Controller
      */
     public function edit($id)
     {
-        //
+        $type = Vehicle_type::find($id);
+        
+        return view('vehicle_types.edit', [ 'type' => $type  ]);
     }
 
     /**
@@ -70,7 +78,11 @@ class Vehicle_types extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $type = Vehicle_type::find($id);
+        $type->fill($request->all());
+        $type->save();
+
+        return redirect()->route('vehicle_types.index');
     }
 
     /**
@@ -81,6 +93,9 @@ class Vehicle_types extends Controller
      */
     public function destroy($id)
     {
-        //
+        $type = Vehicle_type::find($id);
+        $type->delete();
+        
+        return redirect()->route('vehicle_types.index');
     }
 }

@@ -13,6 +13,8 @@
 
 Route::get('/', 'Front@index')->name('dashboard');
 Route::resource('vehicles','Vehicles');
+Route::resource('vehicle_types','Vehicle_types');
+Route::resource('fuel_types','Fuel_types');
 Route::resource('packages','Packages');
 Auth::routes();
 

@@ -29,7 +29,7 @@ class Vehicles extends Controller
      */
     public function create()
     {
-        $fuels = Fuel_type::all()->pluck('fuel', 'id');
+        $fuels = $this->_fuelTypes(); 
         
         $types = Vehicle_type::all()->pluck('type', 'id');
         
@@ -76,7 +76,7 @@ class Vehicles extends Controller
     public function edit($id)
     {
         $vehicle = Vehicle::find($id);
-        $fuels = Fuel_type::all()->pluck('fuel', 'id');
+        $fuels = $this->_fuelTypes(); 
         
         $types = Vehicle_type::all()->pluck('type', 'id');
         
@@ -113,6 +113,18 @@ class Vehicles extends Controller
      */
     public function destroy($id)
     {
-        //
+        $vehicle = Vehicle::find($id);
+        $vehicle->delete();
+        
+        return redirect()->route('vehicles.index');
+    }
+
+    private function _fuelTypes(){
+        $fuels = Fuel_type::all();
+        $types = [];
+        foreach ($fuels as $key => $f) {
+            $types[$f->id]=$f->fuel.' ( $ '.$f->cost.' / gal )';
+        }
+        return $types;
     }
 }

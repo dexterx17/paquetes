@@ -15,9 +15,10 @@ class Fuel_types extends Controller
      */
     public function index()
     {
-        //
+        $types = Fuel_type::all();
+        
+        return view('fuel_types.list', [ 'types' => $types ]);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -25,7 +26,7 @@ class Fuel_types extends Controller
      */
     public function create()
     {
-        //
+        return view('fuel_types.create', [ ]);
     }
 
     /**
@@ -36,7 +37,11 @@ class Fuel_types extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $type = new Fuel_type($request->all());
+
+        $type->save();
+
+        return redirect()->route('fuel_types.index');
     }
 
     /**
@@ -58,7 +63,9 @@ class Fuel_types extends Controller
      */
     public function edit($id)
     {
-        //
+        $type = Fuel_type::find($id);
+        
+        return view('fuel_types.edit', [ 'type' => $type  ]);
     }
 
     /**
@@ -70,7 +77,11 @@ class Fuel_types extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $type = Fuel_type::find($id);
+        $type->fill($request->all());
+        $type->save();
+
+        return redirect()->route('fuel_types.index');
     }
 
     /**
@@ -81,6 +92,9 @@ class Fuel_types extends Controller
      */
     public function destroy($id)
     {
-        //
+        $type = Fuel_type::find($id);
+        $type->delete();
+        
+        return redirect()->route('fuel_types.index');
     }
 }

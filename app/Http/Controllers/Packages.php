@@ -50,7 +50,7 @@ class Packages extends Controller
         }
         $package->save();
 
-        $this->calculate_best_vehicle($package, $request->distance);
+        $vehicles = $this->calculate_best_vehicle($package, $request->distance);
 
         return redirect()->route('packages.index');
     }

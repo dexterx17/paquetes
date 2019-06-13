@@ -9,7 +9,7 @@ class Vehicle extends Model
     protected  $table = 'vehicles';
 
     protected $fillable = [
-    	'model', 'refrigeration', 'width', 'height', 'weight',
+    	'model', 'refrigeration', 'width', 'height', 'weight', 'length',
         'min_rf', 'max_rf','vehicle_type_id', 'fuel_type_id', 'plaque'
     ];
 

@@ -56,15 +56,27 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="volume_capacity">Volume capacity<span class="text-danger">*</span></label>
-                                        <input type="text" name="volume_capacity" parsley-trigger="change" required
-                                                placeholder="Enter volume capacity" class="form-control" id="volume_capacity">
+                                        <label for="height">Height capacity<span class="text-danger">*</span></label>
+                                        <input type="text" name="height" parsley-trigger="change" required
+                                                placeholder="Enter Height capacity" class="form-control" id="height">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="load_capacity">Load capacity<span class="text-danger">*</span></label>
-                                        <input type="text" name="load_capacity" parsley-trigger="change" required
-                                                placeholder="Enter load capacity" class="form-control" id="load_capacity">
+                                        <label for="width">Width capacity<span class="text-danger">*</span></label>
+                                        <input type="text" name="width" parsley-trigger="change" required
+                                                placeholder="Enter Width capacity" class="form-control" id="width">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="weight">Weight capacity<span class="text-danger">*</span></label>
+                                        <input type="text" name="weight" parsley-trigger="change" required
+                                                placeholder="Enter Weight capacity" class="form-control" id="weight">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="length">Length capacity<span class="text-danger">*</span></label>
+                                        <input type="text" name="length" parsley-trigger="change" required
+                                                placeholder="Enter Length capacity" class="form-control" id="length">
                                     </div>
 
                                     <div class="form-group">
@@ -76,10 +88,15 @@
 
 
                                     <div class="form-group">
-                                        <div class="checkbox">
-                                            <input id="fragile" type="checkbox" name="fragile">
-                                            <label for="fragile"> Fragile cabine </label>
-                                        </div>
+                                        <label for="min_rf">Min temperature capacity</label>
+                                        <input type="text" name="min_rf" parsley-trigger="change"
+                                                placeholder="Enter Min temperature capacity" class="form-control" id="min_rf">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="max_rf">Max temperature capacity</label>
+                                        <input type="text" name="max_rf" parsley-trigger="change"
+                                                placeholder="Enter Max temperature capacity" class="form-control" id="max_rf">
                                     </div>
 
                                     <div class="form-group">
