@@ -46,12 +46,12 @@
        <div class="row">
            <div class="col-xl-12">
                <div class="page-title-box">
-                   <h4 class="page-title float-left">Add package</h4>
+                   <h4 class="page-title float-left">Info package</h4>
 
                    <ol class="breadcrumb float-right">
                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Uplon</a></li>
                        <li class="breadcrumb-item"><a href="{{ route('packages.index') }}">Packages</a></li>
-                       <li class="breadcrumb-item active">New</li>
+                       <li class="breadcrumb-item active">Info</li>
                    </ol>
 
                    <div class="clearfix"></div>
@@ -68,19 +68,16 @@
 
                             <h4 class="header-title m-t-0">Package info</h4>
                             <p class="text-muted font-13 m-b-10">
-                                Insert details of Package
+                                Details of Package
                             </p>
 
                             <div class="p-20">
-                                <form action="{{ route('packages.store') }}" data-parsley-validate novalidate  method="POST" >
-                                {{ csrf_field() }}
-
                                     <div class="row">
                                         <div class="col-sm-6 col-lg-6 col-xs-12">
                                             <div class="form-group">
                                                 <label for="description">Description<span class="text-danger">*</span></label>
-                                                <input type="text" name="description" parsley-trigger="change" required 
-                                                        placeholder="Enter description" class="form-control" id="description">
+                                                <input type="text" name="description" parsley-trigger="change" required value="{{ $package->description }}"
+                                                        placeholder="Enter description" class="form-control" id="description" disabled="disabled">
                                             </div>
                                             
                                             <div class="form-group">
@@ -88,35 +85,35 @@
                                                 
                                                 <div class="row">
                                                     <small for="length" class="col-lg-1 col-md-1">Length: <span class="text-danger">*</span> </small>
-                                                    <input type="text" name="length" parsley-trigger="change" required value="0"
+                                                    <input type="text" name="length" parsley-trigger="change" required value="{{ $package->length }}" disabled="disabled"
                                                             placeholder="Enter length" class="form-control col-lg-3 col-md-3" id="length">
                                                     <small for="width" class="col-lg-1 col-md-1">Width: <span class="text-danger">*</span> </small>
-                                                    <input type="text" name="width" parsley-trigger="change" required value="0"
+                                                    <input type="text" name="width" parsley-trigger="change" required value="{{ $package->width }}" disabled="disabled"
                                                             placeholder="Enter width" class="form-control col-lg-3 col-md-3" id="width">
                                                     <small for="height" class="col-lg-1 col-md-1">Height: <span class="text-danger">*</span> </small>
-                                                    <input type="text" name="height" parsley-trigger="change" required value="0"
+                                                    <input type="text" name="height" parsley-trigger="change" required value="{{ $package->height }}" disabled="disabled"
                                                             placeholder="Enter height" class="form-control col-lg-3 col-md-3" id="height">
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="weight">Weight<span class="text-danger">*</span></label>
-                                                <input type="text" name="weight" parsley-trigger="change" required value="0"
+                                                <input type="text" name="weight" parsley-trigger="change" required value="{{ $package->weight }}" disabled="disabled"
                                                         placeholder="Enter weight" class="form-control" id="weight">
                                             </div>
 
 
                                             <div class="form-group">
                                                 <div class="checkbox">
-                                                    <input id="refrigeration" type="checkbox" name="refrigeration">
+                                                    <input id="refrigeration" type="checkbox" name="refrigeration" @if($package->refrigeration) checked @endif  disabled="disabled">
                                                     <label for="refrigeration"> Needs refrigeration </label>
                                                 </div>
                                                 <div class="row">
                                                     <small for="min_temp" class="col-lg-2 col-md-2">Min temperature: <span class="text-danger">*</span> </small>
-                                                    <input type="number" name="min_temp" parsley-trigger="change" value="0"
+                                                    <input type="number" name="min_temp" parsley-trigger="change" value="{{ $package->min_temp }}"  disabled="disabled"
                                                             placeholder="Enter length" class="form-control col-lg-4 col-md-4" id="min_temp">
                                                     <small for="max_temp" class="col-lg-2 col-md-2">Max temperature: <span class="text-danger">*</span> </small>
-                                                    <input type="number" name="max_temp" parsley-trigger="change"  value="0"
+                                                    <input type="number" name="max_temp" parsley-trigger="change"  value="{{ $package->max_temp }}"  disabled="disabled"
                                                             placeholder="Enter width" class="form-control col-lg-4 col-md-4" id="max_temp">
                                                 </div>
                                             </div>
@@ -124,9 +121,8 @@
                                             <div class="form-group">
                                                 <label for="origen">Origen<span class="text-danger">*</span></label>
                                                 <div class="row">
-                                                  <input type="text" name="origen" parsley-trigger="change" required
-                                                      placeholder="Enter origen" class="form-control col-lg-10 col-md-10" id="origen">
-                                                      <button type="button" class="btn btn-primary col-lg-2 col-md-2" id="btn-origen">Locate</button>
+                                                  <input type="text" name="origen" parsley-trigger="change" required value="{{ $package->origen }}"  disabled="disabled"
+                                                      placeholder="Enter origen" class="form-control col-lg-12 col-md-12" id="origen">
                                                 </div>
                                             </div>
 
@@ -134,9 +130,8 @@
                                             <div class="form-group">
                                                 <label for="destino">Destino<span class="text-danger">*</span></label>
                                                 <div class="row">
-                                                    <input type="text" name="destino" parsley-trigger="change" required
-                                                        placeholder="Enter destino" class="form-control col-lg-10 col-md-10" id="destino">
-                                                    <button type="button" class="btn btn-primary col-lg-2 col-md-2" id="btn-destino">Locate</button>
+                                                    <input type="text" name="destino" parsley-trigger="change" required value="{{ $package->destino }}"  disabled="disabled"
+                                                        placeholder="Enter destino" class="form-control col-lg-12 col-md-12" id="destino">
                                                 </div>      
                                             </div>
                                         </div>
@@ -145,7 +140,7 @@
 
                                             <small class="pull-right"> 
                                               <label for="distance">Distance</label>
-                                                <input type="text" name="distance" id="distance" readonly="readonly">
+                                                <input type="text" name="distance" id="distance" readonly="readonly" disabled="disabled">
                                               </small>
                                             </h4>
                                             <hr>
@@ -154,15 +149,6 @@
                                                 
                                             </div>
                                         </div>
-                                    </div>
-                                    
-                                    <div class="form-group text-center m-b-0">
-                                        <button class="btn btn-primary waves-effect waves-light" type="submit">
-                                            Submit Package
-                                        </button>
-                                        <button type="reset" class="btn btn-secondary waves-effect m-l-5">
-                                            Cancel
-                                        </button>
                                     </div>
 
                                 </form>
@@ -175,6 +161,63 @@
                 </div>
             </div><!-- end col-->
 
+        </div>
+        <!-- end row --> 
+
+        <div class="row">
+    
+            <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                <table class="table table-condensed table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                Entity Type
+                            </th>
+                            <th>Length <small>cm</small></th>
+                            <th>Width <small>cm</small></th>
+                            <th>Height <small>cm</small></th>
+                            <th>Weight <small>cm</small></th>
+                            <th colspan="2">
+                                <table>
+                                <tr><td colspan="2">Refrigeration</td></tr>
+                                <tr>
+                                    <th>Min_rf</th>
+                                    <th>Max_rf</th>
+                                </tr>
+                                </table>
+                            </th>
+                            <th rowspan="3">Ranking Function <small>Total</small></th>
+                            <th rowspan="3">Shipping price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Packet</th>
+                            <td>{{ $package->length }}</td>
+                            <td>{{ $package->width }}</td>
+                            <td>{{ $package->height }}</td>
+                            <td>{{ $package->weight }}</td>
+                            <td>{{ $package->min_temp }}</td>
+                            <td>{{ $package->max_temp }}</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        @foreach($package->vehicles as $v)
+                        <tr @if($v->winner) class="bg-success" @endif>
+                            <th class="text-center">{{ $v->vehicle->model }}</th>
+                            <td class="text-center">{{ $v->vehicle->length }}</td>
+                            <td class="text-center">{{ $v->vehicle->width }}</td>
+                            <td class="text-center">{{ $v->vehicle->height }}</td>
+                            <td class="text-center">{{ $v->vehicle->weight }}</td>
+                            <td class="text-center">{{ $v->vehicle->min_rf }}</td>
+                            <td class="text-center">{{ $v->vehicle->max_rf }}</td>
+                            <td class="text-center">{{  number_format($v->value, 2)  }}</td>
+                            <td class="text-center">{{ number_format($v->cost, 2) }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
         <!-- end row --> 
 
@@ -197,15 +240,6 @@
         var puntoOrigen;
         var puntoDestino;
 
-        $('#btn-origen').on('click',function(){
-            console.log('');
-            geocodeOrigen(geocoder,map);
-        });
-
-        $('#btn-destino').on('click',function(){
-            console.log('');
-            geocodeDestino(geocoder,map);
-        });
 
         function geocodeOrigen(geocoder, resultsMap) {
             var address = document.getElementById('origen').value;
@@ -276,11 +310,10 @@
 
             directionsDisplay.addListener('directions_changed', function() {
               computeTotalDistance(directionsDisplay.getDirections());
-              calculate_volumetric_weigth();
             });
 
-
-         
+            geocodeOrigen(geocoder,map);
+            geocodeDestino(geocoder,map);
         }
 
       function displayRoute(origin, destination, service, display) {

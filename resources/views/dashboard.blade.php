@@ -27,7 +27,7 @@
                 <div class="card-box tilebox-one">
                     <i class="icon-layers float-right text-muted"></i>
                     <h6 class="text-muted text-uppercase m-b-20">Packages</h6>
-                    <h2 class="m-b-20" data-plugin="counterup">1,587</h2>
+                    <h2 class="m-b-20" data-plugin="counterup">{{ $packages }}</h2>
                 </div>
             </div>
 
@@ -35,7 +35,7 @@
                 <div class="card-box tilebox-one">
                     <i class="icon-paypal float-right text-muted"></i>
                     <h6 class="text-muted text-uppercase m-b-20">Vehicles</h6>
-                    <h2 class="m-b-20"><span data-plugin="counterup">12</span></h2>
+                    <h2 class="m-b-20"><span data-plugin="counterup">{{ $vehicles }}</span></h2>
                 </div>
             </div>
 
@@ -43,7 +43,7 @@
                 <div class="card-box tilebox-one">
                     <i class="icon-chart float-right text-muted"></i>
                     <h6 class="text-muted text-uppercase m-b-20">Fuel Types</h6>
-                    <h2 class="m-b-20"><span data-plugin="counterup">3</span></h2>
+                    <h2 class="m-b-20"><span data-plugin="counterup">{{ $fuels }}</span></h2>
                 </div>
             </div>
 
@@ -51,7 +51,7 @@
                 <div class="card-box tilebox-one">
                     <i class="icon-rocket float-right text-muted"></i>
                     <h6 class="text-muted text-uppercase m-b-20">Vehicle Types</h6>
-                    <h2 class="m-b-20" data-plugin="counterup">5</h2>
+                    <h2 class="m-b-20" data-plugin="counterup">{{ $types }}</h2>
                 </div>
             </div>
         </div>

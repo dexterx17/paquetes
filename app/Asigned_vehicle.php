@@ -12,10 +12,13 @@ class Asigned_vehicle extends Model
     	'package_id', 'vehicle_id', 'distance', 'cost', 'value','winner'
     ];
 
-    public $primaryKey = "package_id";
-
     public function package(){
     	return $this->belongsTo('App\Package');
+    }
+
+
+    public function vehicle(){
+    	return $this->belongsTo('App\Vehicle');
     }
 
 }

@@ -73,10 +73,10 @@ class Packages extends Controller
         //PRIMERA ETAPA
         //obtenemos el listado de todos los vehiculos que cumplan con las especificaciones del paquete
         $vehicles = Vehicle::where('height','>=',$package->height)
-                           ->where('width','>=',$package->height)
-                           ->where('length','>=',$package->height)
-                           ->where('weight','>=',$package->height)
-                           ->where('refrigeration','=',$package->refrigeration)
+                           ->where('width','>=',$package->width)
+                           ->where('length','>=',$package->length)
+                           ->where('weight','>=',$package->weight)
+                           ->where('refrigeration','=',($package->refrigeration ? 1 : 0))
                            ->get();
 
         //si el paquete requiere refrigeracion
@@ -98,8 +98,11 @@ class Packages extends Controller
             $height = $package->height / $vehicle->height;
             $length = $package->length / $vehicle->length;
             $weight = $package->weight / $vehicle->weight;
-
-            $refrigeration = ($package->max_temp - $package->min_temp) / ( $vehicle->max_rf - $vehicle->min_rf) ;
+            if($package->refrigeration){
+                $refrigeration = ($package->max_temp - $package->min_temp) / ( $vehicle->max_rf - $vehicle->min_rf) ;
+            }else{
+                $refrigeration = 0;
+            }
             //$dom = ($w * $width) + ($w * $height) + ($w * $length) + ($w * $weight) + ( $w * $refrigeration);
             $dom =  $w * ($width + $height + $length + $weight + $refrigeration);
             $vehicle->dom = $dom;
@@ -109,7 +112,7 @@ class Packages extends Controller
 
 
         //TERCERA ETAPA
-        ////recorremos los vehiculos que pasaron la primera etapa
+        ////recorremos los vehiculos que pasaron la segunda etapa
         foreach ($vehicles as $key => $vehicle) {
             //Salario de conductor
             $h = 20;
@@ -120,16 +123,21 @@ class Packages extends Controller
             $vehicle->cost = $cost;
         }
 
+        //Ordenamos el listado de vehiculo en base al COSTO
+        $vehicle = $vehicles->sortByDesc('cost');
         
-        $winner = $vehicles->first();
-
-        $asigned = new Asigned_vehicle();
-        $asigned->vehicle_id = $winner->id;
-        $asigned->package_id = $package->id;
-        $asigned->distance = $distance;
-        $asigned->cost = $winner->cost;
-        $asigned->value = $winner->dom; //Ranking formule
-        $asigned->save();
+        ////recorremos los vehiculos que pasaron las 3 etapa
+        foreach ($vehicles as $key => $vehicle) {
+            $asigned = new Asigned_vehicle();
+            $asigned->vehicle_id = $vehicle->id;
+            $asigned->package_id = $package->id;
+            $asigned->distance = $distance;
+            $asigned->cost = $vehicle->cost;
+            $asigned->value = $vehicle->dom; //Ranking formule
+            if($key==0)
+                $asigned->winner = true;
+            $asigned->save();
+        } 
 
         return $vehicles;
     }
@@ -142,7 +150,9 @@ class Packages extends Controller
      */
     public function show($id)
     {
-        //
+        $package = Package::find($id);
+
+        return view('packages.info',[ 'package' => $package]);
     }
 
     /**
@@ -189,6 +199,8 @@ class Packages extends Controller
      */
     public function destroy($id)
     {
-        //
+        $package = Package::find($id);
+        $package->delete();
+        return redirect()->route('packages.index');
     }
 }

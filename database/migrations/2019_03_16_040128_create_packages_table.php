@@ -33,8 +33,8 @@ class CreatePackagesTable extends Migration
         }); 
 
         Schema::create('asigned_vehicle', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('package_id')->unsigned();
-            $table->primary('package_id');
             $table->foreign('package_id')->references('id')->on('packages');
             
             $table->integer('vehicle_id')->unsigned();
