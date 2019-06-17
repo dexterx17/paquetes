@@ -14,7 +14,6 @@ class Front extends Controller
     var $datos;
 
     public function index(){
-
         $this->datos['vehicles'] = Vehicle::count();
         $this->datos['packages'] = Package::count();
         $this->datos['fuels'] = Fuel_type::count();
