@@ -52,7 +52,7 @@ class Packages extends Controller
 
         $vehicles = $this->calculate_best_vehicle($package, $request->distance);
 
-        return redirect()->route('packages.index');
+        return redirect()->route('packages.show',$package->id);
     }
 
     /**
