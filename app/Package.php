@@ -11,7 +11,7 @@ class Package extends Model
     protected $fillable = [
     	'description', 'length', 'width', 'height', 
     	'weight', 'refrigeration', 'origen', 'destino',
-        'min_temp', 'max_temp'
+        'min_temp', 'max_temp', 'assign_attempt'
     ];
 
     public function vehicles(){

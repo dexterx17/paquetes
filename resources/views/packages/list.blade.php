@@ -39,14 +39,14 @@
                         <a class="btn btn-sm waves-effect btn-secondary" href="{{ route('packages.create') }}"> <i class="fa fa-plus"></i> </a>
                     </h4>
                     <p class="text-muted font-13 m-b-30">
-                        Registered4ackages
+                        Registered packages
                     </p>
 
                     <table id="datatable" class="table table-striped table-bordered">
                         <thead>
                         <tr>
                             <th>Description</th>
-                            <th>Dimensions</th>h>
+                            <th>Dimensions</th>
                             <th>Refrigeration</th>
                             <th>Route</th>
                             <th>Vehicle</th>

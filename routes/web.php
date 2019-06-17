@@ -19,6 +19,7 @@ Route::resource('fuel_types','Fuel_types');
 //Route::resource('packages','Packages');
 
 Route::resource('packages','Packages', ['except' => 'delete'] );
+Route::post('packages/{id}/assign','Packages@assign')->name('packages.assign');
 Route::get('/packages/delete/{id}','Packages@destroy')->name('packages.destroy');
 
 Auth::routes();

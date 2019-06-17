@@ -23,6 +23,7 @@ class CreatePackagesTable extends Migration
             $table->boolean('refrigeration')->default(false);
             $table->double('min_temp')->nullable();
             $table->double('max_temp')->nullable();
+            $table->integer('assign_attempt')->nullable()->default(0);
             //$table->boolean('fragile')->default(false);
             
             $table->string('origen');

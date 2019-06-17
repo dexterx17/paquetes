@@ -66,7 +66,17 @@
                     <div class="row">
                         <div class="col-sm-12 col-xs-12 col-md-12">
 
-                            <h4 class="header-title m-t-0">Package info</h4>
+                            <h4 class="header-title m-t-0">Package info
+                                @if( $package->assign_attempt==0 )
+                                <form action="{{ route('packages.assign', $package->id) }}" method="POST">
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="distance" id="distance" readonly="readonly" >
+                                    <button type="submit" class="btn btn-primary pull-right">Assing vehicle</button>
+                                </form>
+                                @else
+                                    <a href="{{ route('packages.show',$package->id) }}#vehicles"  class="btn btn-secondary pull-right">Assigned Vehicle</a>
+                                @endif
+                            </h4>
                             <p class="text-muted font-13 m-b-10">
                                 Details of Package
                             </p>
@@ -139,8 +149,8 @@
                                             <h4 class="header-title m-t-0">Map
 
                                             <small class="pull-right"> 
-                                              <label for="distance">Distance</label>
-                                                <input type="text" name="distance" id="distance" readonly="readonly" disabled="disabled">
+                                              <label for="distance">Distance: </label>
+                                                <span class="distance"></span>
                                               </small>
                                             </h4>
                                             <hr>
@@ -164,7 +174,7 @@
         </div>
         <!-- end row --> 
 
-        <div class="row">
+        <div class="row" id="vehicles">
     
             <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
                 <table class="table table-condensed table-striped table-bordered">
@@ -202,19 +212,29 @@
                             <td>-</td>
                             <td>-</td>
                         </tr>
-                        @foreach($package->vehicles as $v)
-                        <tr @if($v->winner) class="bg-success" @endif>
-                            <th class="text-center">{{ $v->vehicle->model }}</th>
-                            <td class="text-center">{{ $v->vehicle->length }}</td>
-                            <td class="text-center">{{ $v->vehicle->width }}</td>
-                            <td class="text-center">{{ $v->vehicle->height }}</td>
-                            <td class="text-center">{{ $v->vehicle->weight }}</td>
-                            <td class="text-center">{{ $v->vehicle->min_rf }}</td>
-                            <td class="text-center">{{ $v->vehicle->max_rf }}</td>
-                            <td class="text-center">{{  number_format($v->value, 2)  }}</td>
-                            <td class="text-center">{{ number_format($v->cost, 2) }}</td>
+                        @if( $package->assign_attempt==0 )
+                        <tr>
+                            <td>Aún no has asignado un vehículo</td>
                         </tr>
-                        @endforeach
+                        @else
+                            @if( $package->assign_attempt==0 )
+                                @foreach($package->vehicles as $v)
+                                <tr @if($v->winner) class="bg-success" @endif>
+                                    <th class="text-center">{{ $v->vehicle->model }}</th>
+                                    <td class="text-center">{{ $v->vehicle->length }}</td>
+                                    <td class="text-center">{{ $v->vehicle->width }}</td>
+                                    <td class="text-center">{{ $v->vehicle->height }}</td>
+                                    <td class="text-center">{{ $v->vehicle->weight }}</td>
+                                    <td class="text-center">{{ $v->vehicle->min_rf }}</td>
+                                    <td class="text-center">{{ $v->vehicle->max_rf }}</td>
+                                    <td class="text-center">{{  number_format($v->value, 2)  }}</td>
+                                    <td class="text-center">{{ number_format($v->cost, 2) }}</td>
+                                </tr>
+                                @endforeach
+                            @else
+                            
+                            @endif
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -345,7 +365,8 @@
           total += myroute.legs[i].distance.value;
         }
         total = total / 1000;
-        document.getElementById('distance').value = total;
+        $('#distance').val(total);
+        $('.distance').html(total+' km');
       }
     </script>
 

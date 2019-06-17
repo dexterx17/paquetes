@@ -50,6 +50,16 @@ class Packages extends Controller
         }
         $package->save();
 
+        //$vehicles = $this->calculate_best_vehicle($package, $request->distance);
+
+        return redirect()->route('packages.show',$package->id);
+    }
+
+    public function assign($id, Request $request){
+        $package = Package::find($id);
+        $package->assign_attempt=($package->assign_attempt+1);
+        $package->save();
+
         $vehicles = $this->calculate_best_vehicle($package, $request->distance);
 
         return redirect()->route('packages.show',$package->id);
@@ -126,6 +136,10 @@ class Packages extends Controller
         //Ordenamos el listado de vehiculo en base al COSTO
         $vehicle = $vehicles->sortByDesc('cost');
         
+        //Verificamos si ya tiene asignados autos
+        if($package->vehicles->count()>0){
+            $package->vehicles()->delete();
+        }
         ////recorremos los vehiculos que pasaron las 3 etapa
         foreach ($vehicles as $key => $vehicle) {
             $asigned = new Asigned_vehicle();
@@ -151,7 +165,7 @@ class Packages extends Controller
     public function show($id)
     {
         $package = Package::find($id);
-
+        //dd($package->assign_attempt);
         return view('packages.info',[ 'package' => $package]);
     }
 
