@@ -217,7 +217,7 @@
                             <td>Aún no has asignado un vehículo</td>
                         </tr>
                         @else
-                            @if( $package->assign_attempt==0 )
+                            @if( $package->vehicles )
                                 @foreach($package->vehicles as $v)
                                 <tr @if($v->winner) class="bg-success" @endif>
                                     <th class="text-center">{{ $v->vehicle->model }}</th>
@@ -232,7 +232,9 @@
                                 </tr>
                                 @endforeach
                             @else
-                            
+                            <tr>
+                                <td>Ningún vehículo cumple las condiciones para este paquete</td>
+                            </tr>
                             @endif
                         @endif
                     </tbody>

@@ -145,7 +145,7 @@
 
                                             <small class="pull-right"> 
                                               <label for="distance">Distance</label>
-                                                <input type="text" name="distance" id="distance" readonly="readonly">
+                                                <input type="text" name="distance" id="distance" value="0" readonly="readonly">
                                               </small>
                                             </h4>
                                             <hr>
